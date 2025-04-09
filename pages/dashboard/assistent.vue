@@ -16,9 +16,19 @@ const isOpen = ref(false);
         You don't have an assistant yet. It's a great time to create your first
         Ponti Assistant!
       </p>
-      <div class="w-[325px]">
-        <UButton label="Create new" block @click="isOpen = true" />
-      </div>
+      <UModal fullscreen title="Modal fullscreen">
+        <UButton
+          label="Create New Assistant +"
+          color="info"
+          size="xl"
+          class="rounded-full"
+          variant="subtle"
+        />
+
+        <template #body>
+          <Placeholder class="h-full" />
+        </template>
+      </UModal>
     </div>
   </div>
 </template>

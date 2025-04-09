@@ -64,7 +64,7 @@ const activeRoute = (link: string) => {
         <div
           class="flex h-8 w-8 items-center justify-center rounded-full"
           :class="{
-            'bg-gray-700': activeRoute(link.to),
+            'bg-gray-300': activeRoute(link.to),
             'bg-white': !activeRoute(link.to),
           }"
         >
@@ -72,8 +72,7 @@ const activeRoute = (link: string) => {
             :name="link.icon"
             class="h-5 w-5"
             :class="{
-              'text-white': activeRoute(link.to),
-              'text-black': !activeRoute(link.to),
+              'text-gray-700': !activeRoute(link.to),
             }"
           />
         </div>
