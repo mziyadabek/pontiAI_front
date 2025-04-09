@@ -1,7 +1,8 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
 import tailwindcss from "@tailwindcss/vite";
+
+
 export default defineNuxtConfig({
-  plugins: ['~/plugins/pinia'],
+  plugins: ['~/plugins/pinia', ],
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
   modules: ['@nuxt/ui'],
@@ -10,5 +11,15 @@ export default defineNuxtConfig({
       tailwindcss(),
     ],
   },
-  css: ['~/assets/css/main.css']
-})
+  css: [
+    '~/assets/css/main.css',  // Your custom CSS
+   
+  ],
+  app: {
+    head: {
+      // script: [
+      //   { src: 'https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js' }
+      // ],
+    },
+  },
+});

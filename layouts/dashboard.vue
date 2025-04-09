@@ -6,7 +6,7 @@
           href="/"
           class="hover:underline underline-offset-4 max-md:hidden text-primary cursor-pointer rounded-xl font-medium transition text-[0.9rem]"
         >
-          PontiAI
+          Ponti
         </a>
         <a
           target="_blank"
@@ -20,12 +20,6 @@
           href="/pricing"
         >
           Стоимость
-        </a>
-        <a
-          class="hover:underline underline-offset-4 max-md:hidden text-primary cursor-pointer rounded-xl font-medium transition text-[0.9rem]"
-          href="/blog"
-        >
-          Блог
         </a>
       </div>
     </div>
