@@ -14,29 +14,23 @@ const formData = ref({
 const isLoading = ref(false);
 const errorMessage = ref("");
 
-async function handleLogin() {
+const handleLogin = async () => {
   try {
     isLoading.value = true;
     errorMessage.value = "";
 
-    console.log("Form Data for Login:", formData.value);
+    const { email, password } = formData.value;
+    const response = await authStore.login(email, password);
+    console.log("Login success:", response);
 
-    const response = await authStore.login(
-      formData.value.email,
-      formData.value.password
-    );
-    console.log("Login response:", response);
-
-    // On successful login, redirect to the dashboard
     router.push("/dashboard");
-  } catch (error: any) {
-    console.error("Login error:", error);
-    errorMessage.value =
-      error.message || "Неверные учетные данные. Попробуйте еще раз.";
+  } catch (err: any) {
+    console.error("Login failed:", err);
+    errorMessage.value = "Неверные данные для входа.";
   } finally {
     isLoading.value = false;
   }
-}
+};
 </script>
 
 <template>

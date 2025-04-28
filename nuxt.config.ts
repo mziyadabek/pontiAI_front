@@ -1,25 +1,23 @@
-import tailwindcss from "@tailwindcss/vite";
-
+import tailwindcss from '@tailwindcss/vite'
 
 export default defineNuxtConfig({
-  plugins: ['~/plugins/pinia', ],
+  /* ---------- 1.  PUBLIC RUNTIME CONFIG  ---------- */
+  runtimeConfig: {
+    public: {
+      apiBase:
+        process.env.NUXT_PUBLIC_API_BASE || "https://ai-assistant-backend-cxb2.onrender.com",
+    },
+  },
+
+  /* ---------- 2.  EXISTING SETTINGS  -------------- */
+  plugins: ['~/plugins/pinia'],
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
   modules: ['@nuxt/ui'],
-  vite: {
-    plugins: [
-      tailwindcss(),
-    ],
-  },
-  css: [
-    '~/assets/css/main.css',  // Your custom CSS
-   
-  ],
-  app: {
-    head: {
-      // script: [
-      //   { src: 'https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js' }
-      // ],
-    },
-  },
-});
+
+  vite: { plugins: [tailwindcss()] },
+
+  css: ['~/assets/css/main.css'],
+
+  app: { head: {} }
+})

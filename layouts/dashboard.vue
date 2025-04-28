@@ -18,26 +18,24 @@ const toggleDropdown = () => {
 };
 
 // Logout logic
-const logout = () => {
-  authStore.logout();
-  router.push("/signin"); // Redirect to sign in after logout
-};
-
-// Fetch user info once the component is mounted
 onMounted(async () => {
-  // Make sure user info is fetched after the token is available
   await authStore.fetchUserInfo();
 
-  // Set user info to the local state for usage in the template
   if (authStore.user) {
-    userName.value = authStore.user.name;
-    userEmail.value = authStore.user.email;
-    userInitials.value = userName.value
+    const { name, email } = authStore.user;
+    userName.value = name;
+    userEmail.value = email;
+    userInitials.value = name
       .split(" ")
-      .map((name) => name[0].toUpperCase()) // Get first letter of each name
-      .join(""); // Get initials
+      .map((n) => n[0]?.toUpperCase() || "")
+      .join("");
   }
 });
+
+const logout = async () => {
+  await authStore.logout();
+  router.push("/signin");
+};
 </script>
 
 <template>

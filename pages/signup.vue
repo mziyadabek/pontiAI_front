@@ -21,7 +21,7 @@ const errorMessage = ref("");
 const successMessage = ref("");
 const validationErrors = ref<Record<string, string[]>>({});
 
-async function handleRegister() {
+const handleRegister = async () => {
   try {
     isLoading.value = true;
     errorMessage.value = "";
@@ -34,22 +34,15 @@ async function handleRegister() {
       formData.value.password
     );
 
-    successMessage.value = "Registration successful! Redirecting to login...";
+    successMessage.value = "Регистрация прошла успешно!";
     setTimeout(() => router.push("/signin"), 2000);
-  } catch (error: any) {
-    console.error("Registration error:", error);
-
-    if (error.data?.errors) {
-      validationErrors.value = error.data.errors;
-    } else if (error.data?.message) {
-      errorMessage.value = error.data.message;
-    } else {
-      errorMessage.value = "Registration failed. Please try again.";
-    }
+  } catch (err: any) {
+    errorMessage.value = err.message || "Ошибка при регистрации.";
+    if (err.data?.errors) validationErrors.value = err.data.errors;
   } finally {
     isLoading.value = false;
   }
-}
+};
 </script>
 
 <template>
