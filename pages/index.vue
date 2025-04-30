@@ -28,7 +28,7 @@
       <!-- Animated Buttons -->
       <div class="flex space-x-4 animate-fade-in delay-300">
         <NuxtLink
-          to="/create-assistant"
+          to="/dashboard"
           class="bg-blue-500 text-white px-6 py-3 rounded-full text-lg font-semibold hover:bg-blue-600 transition-colors btn-primary"
         >
           Создать ассистента

@@ -21,7 +21,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     nuxtApp.payload.serverRendered
   ) {
     if (!isAuthenticated) {
-      return navigateTo("/sign-in");
+      return navigateTo("/signin");
     }
   }
 

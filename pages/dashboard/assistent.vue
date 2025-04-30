@@ -2,6 +2,12 @@
 import { ref, onMounted } from "vue";
 import { useNuxtApp } from "#app";
 
+// Define the expected structure of the API response for knowledge upload
+interface KnowledgeUploadResponse {
+  message: string; // Assuming the API sends a message field in the response
+  status: number; // Assuming the API sends a status code (200, etc.)
+}
+
 definePageMeta({
   layout: "dashboard",
   middleware: "auth",
@@ -12,7 +18,6 @@ const { $api } = useNuxtApp();
 const isOpen = ref(false);
 const loading = ref(false);
 const assistants = ref<Array<{ id: number; name: string }>>([]);
-
 const assistantName = ref("");
 const conversationTone = ref("");
 const fallbackAnswer = ref("");
@@ -32,13 +37,19 @@ const roles = [
   { label: "Tech Support", value: "tech_support" },
 ];
 
+// Handle file upload event
 function handleFileUpload(e: Event) {
   const file = (e.target as HTMLInputElement).files?.[0];
-  if (file && file.type === "application/pdf") {
+
+  if (file && (file.type === "application/pdf" || file.type === "text/plain")) {
     businessFile.value = file;
+  } else {
+    alert("Only PDF or TXT files are allowed.");
+    businessFile.value = null;
   }
 }
 
+// Create a new assistant
 async function createAssistant() {
   loading.value = true;
 
@@ -80,6 +91,7 @@ async function createAssistant() {
   }
 }
 
+// Reset the form after assistant creation
 function resetForm() {
   assistantName.value = "";
   conversationTone.value = "";
@@ -89,6 +101,7 @@ function resetForm() {
   businessFile.value = null;
 }
 
+// Fetch existing assistants
 async function fetchAssistants() {
   try {
     assistants.value = await $api("/assistants/", {
@@ -99,12 +112,10 @@ async function fetchAssistants() {
   }
 }
 
-function uploadKnowledge(id: number) {
-  console.log(`Uploading knowledge for assistant: ${id}`);
-}
-
+// Copy the assistant's chat link
 async function copyLink(id: number) {
   try {
+    loading.value = true;
     const response = await $api<{ link: string }>(
       `/assistants/${id}/chat-link`,
       {
@@ -112,14 +123,78 @@ async function copyLink(id: number) {
       }
     );
 
-    // Open chat link in new tab
-    window.open(response.link, "_blank");
+    if (response?.link) {
+      window.open(response.link, "_blank");
+    } else {
+      alert("No chat link available for this assistant.");
+    }
   } catch (error) {
     console.error("Failed to get chat link:", error);
-    alert("Could not get assistant chat link.");
+    alert("Could not get assistant chat link. Please try again.");
+  } finally {
+    loading.value = false;
   }
 }
 
+// Upload knowledge base file for the assistant
+async function uploadKnowledge(assistantId: number) {
+  if (!businessFile.value) {
+    alert("Please upload a knowledge base document first.");
+    return;
+  }
+
+  const formData = new FormData();
+  formData.append("file", businessFile.value);
+
+  try {
+    loading.value = true;
+    // Make the POST request to upload the knowledge base file
+    const response = await $api<KnowledgeUploadResponse>(
+      `/assistants/${assistantId}/upload-knowledge`,
+      {
+        method: "POST",
+        body: formData,
+      }
+    );
+
+    // Check if the response status is 200 (success)
+    if (response.status === 200) {
+      alert("Knowledge base uploaded successfully.");
+    } else {
+      alert("Failed to upload knowledge base.");
+    }
+  } catch (error) {
+    console.error("Error uploading knowledge base:", error);
+    alert("Failed to upload knowledge base.");
+  } finally {
+    loading.value = false;
+  }
+}
+
+// Delete an assistant
+async function deleteAssistant(assistantId: number) {
+  const confirmation = confirm(
+    "Are you sure you want to delete this assistant?"
+  );
+  if (!confirmation) return;
+
+  try {
+    loading.value = true;
+    await $api(`/assistants/${assistantId}`, {
+      method: "DELETE",
+    });
+
+    assistants.value = assistants.value.filter((a) => a.id !== assistantId);
+    alert("Assistant deleted successfully.");
+  } catch (error) {
+    console.error("Error deleting assistant:", error);
+    alert("Failed to delete assistant.");
+  } finally {
+    loading.value = false;
+  }
+}
+
+// Fetch assistants when the component is mounted
 onMounted(fetchAssistants);
 </script>
 
@@ -135,13 +210,97 @@ onMounted(fetchAssistants);
       You don’t have an assistant yet. It’s a great time to create your first
       Ponti Assistant!
     </p>
-    <UButton
-      label="Create New Assistant +"
-      color="info"
-      size="xl"
-      class="rounded-full"
-      @click="isOpen = true"
-    />
+
+    <UModal
+      v-model="isOpen"
+      title="Create a New Assistant"
+      class="modal-container"
+    >
+      <UButton
+        label="Create New Assistant +"
+        size="xl"
+        class="rounded-full"
+        @click="isOpen = true"
+      />
+      <template #body>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4">
+          <div>
+            <label class="block text-sm font-medium mb-1">Assistant Name</label>
+            <UInput
+              v-model="assistantName"
+              placeholder="e.g. Alex"
+              class="input-field"
+            />
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-1"
+              >Tone of Conversation</label
+            >
+            <USelect
+              v-model="conversationTone"
+              :items="tones"
+              placeholder="Select tone"
+              class="input-field"
+            />
+          </div>
+          <div class="sm:col-span-2">
+            <label class="block text-sm font-medium mb-1"
+              >Fallback Answer</label
+            >
+            <UTextarea
+              v-model="fallbackAnswer"
+              placeholder="Fallback answer"
+              autoresize
+              class="input-field"
+            />
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-1">Company Name</label>
+            <UInput
+              v-model="companyName"
+              placeholder="Company Name"
+              class="input-field"
+            />
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-1">Assistant Role</label>
+            <USelect
+              v-model="assistantRole"
+              :items="roles"
+              placeholder="Select role"
+              class="input-field"
+            />
+          </div>
+          <div class="sm:col-span-2">
+            <label class="block text-sm font-medium mb-1"
+              >Business Profile PDF (optional)</label
+            >
+            <input
+              type="file"
+              accept="application/pdf"
+              @change="handleFileUpload"
+              class="file:mr-4 file:rounded file:px-4 file:py-2 file:border-0 file:bg-primary file:text-white"
+            />
+            <span v-if="businessFile" class="text-sm text-gray-500 mt-2">{{
+              businessFile.name
+            }}</span>
+          </div>
+        </div>
+      </template>
+
+      <template #footer>
+        <div class="flex justify-end gap-4 p-4">
+          <UButton
+            :loading="loading"
+            label="Create Assistant"
+            color="primary"
+            size="lg"
+            class="rounded-full"
+            @click="createAssistant"
+          />
+        </div>
+      </template>
+    </UModal>
   </div>
 
   <!-- Assistants List -->
@@ -149,7 +308,7 @@ onMounted(fetchAssistants);
     <UCard
       v-for="a in assistants"
       :key="a.id"
-      class="flex items-center justify-between px-6 py-4"
+      class="flex items-center justify-between px-6 py-4 border rounded-lg shadow-md"
     >
       <span class="font-medium">{{ a.name }}</span>
       <div class="flex gap-2">
@@ -157,88 +316,49 @@ onMounted(fetchAssistants);
           label="Upload Knowledge"
           size="sm"
           @click="uploadKnowledge(a.id)"
+          class="text-white bg-blue-500 hover:bg-blue-600"
         />
         <UButton
           label="Get Link"
           color="primary"
           size="sm"
           @click="copyLink(a.id)"
+          :loading="loading"
+        />
+        <UButton
+          label="Delete"
+          size="sm"
+          @click="deleteAssistant(a.id)"
+          :loading="loading"
+          class="bg-red-500 hover:bg-red-600"
         />
       </div>
     </UCard>
-
-    <div class="flex justify-center pt-6">
-      <UButton
-        label="Create Another Assistant +"
-        color="info"
-        variant="subtle"
-        class="rounded-full"
-        @click="isOpen = true"
-      />
-    </div>
   </div>
-
-  <!-- Assistant Creation Modal -->
-  <UModal v-model="isOpen" title="Create a New Assistant">
-    <template #body>
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div>
-          <label class="block text-sm font-medium mb-1">Assistant Name</label>
-          <UInput v-model="assistantName" placeholder="e.g. Alex" />
-        </div>
-        <div>
-          <label class="block text-sm font-medium mb-1"
-            >Tone of Conversation</label
-          >
-          <USelect
-            v-model="conversationTone"
-            :items="tones"
-            placeholder="Select tone"
-          />
-        </div>
-        <div class="sm:col-span-2">
-          <label class="block text-sm font-medium mb-1">Fallback Answer</label>
-          <UTextarea
-            v-model="fallbackAnswer"
-            placeholder="Fallback answer"
-            autoresize
-          />
-        </div>
-        <div>
-          <label class="block text-sm font-medium mb-1">Company Name</label>
-          <UInput v-model="companyName" placeholder="Company Name" />
-        </div>
-        <div>
-          <label class="block text-sm font-medium mb-1">Assistant Role</label>
-          <USelect
-            v-model="assistantRole"
-            :items="roles"
-            placeholder="Select role"
-          />
-        </div>
-        <div class="sm:col-span-2">
-          <label class="block text-sm font-medium mb-1"
-            >Business Profile PDF (optional)</label
-          >
-          <input
-            type="file"
-            accept="application/pdf"
-            @change="handleFileUpload"
-            class="file:mr-4 file:rounded file:px-4 file:py-2 file:border-0 file:bg-primary file:text-white"
-          />
-        </div>
-      </div>
-    </template>
-
-    <template #footer>
-      <UButton
-        :loading="loading"
-        label="Create Assistant"
-        color="primary"
-        size="lg"
-        class="rounded-full"
-        @click="createAssistant"
-      />
-    </template>
-  </UModal>
 </template>
+
+<style scoped>
+/* Modal styling */
+.modal-container {
+  max-width: 600px;
+  width: 100%;
+  padding: 24px;
+  border-radius: 8px;
+  background-color: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin: auto;
+}
+
+/* Input styling */
+.input-field {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  transition: border-color 0.3s ease;
+}
+
+.input-field:focus {
+  border-color: #007bff;
+  outline: none;
+}
+</style>
