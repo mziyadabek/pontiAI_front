@@ -23,7 +23,7 @@ const handleLogin = async () => {
     const response = await authStore.login(email, password);
     console.log("Login success:", response);
 
-    router.push("/dashboard");
+    router.push("/dashboard/assistent");
   } catch (err: any) {
     console.error("Login failed:", err);
     errorMessage.value = "Неверные данные для входа.";

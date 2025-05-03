@@ -31,7 +31,7 @@ export default defineNuxtPlugin((nuxtApp) => {
       if (response.status === 401) {
         const userStore = useAuthStore();
         await userStore.logout();
-        await nuxtApp.runWithContext(() => navigateTo("/sign-in"));
+        await nuxtApp.runWithContext(() => navigateTo("/signin"));
       }
     },
 

@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div class="flex flex-col w-full h-full gap-5 items-center">
     <AppHeader />
 
-    <div class="flex flex-col gap-4 items-center bg-white py-20 px-40 pt-32">
+    <div class="flex flex-col gap-4 items-center bg-white px-8 sm:px-16">
       <!-- Animated Badge -->
       <UBadge
         size="xl"
@@ -14,11 +14,13 @@
       </UBadge>
 
       <!-- Animated Headings -->
-      <h1 class="text-4xl font-bold text-center mb-6 animate-slide-up">
+      <h1
+        class="text-4xl font-bold text-center mb-6 animate-slide-up sm:text-3xl"
+      >
         Создайте ИИ-ассистента для бизнеса за 5 минут
       </h1>
       <p
-        class="text-2xl text-center text-gray-500 mb-6 animate-slide-up delay-100"
+        class="text-2xl text-center text-gray-500 mb-6 animate-slide-up delay-100 sm:text-xl"
       >
         Автоматизируйте коммуникации с клиентами уже сегодня и повысьте
         конверсию в целевое действие на 11%. Pleep позволит вам сделать это
@@ -26,7 +28,9 @@
       </p>
 
       <!-- Animated Buttons -->
-      <div class="flex space-x-4 animate-fade-in delay-300">
+      <div
+        class="flex space-x-4 animate-fade-in delay-300 flex-wrap justify-center gap-4"
+      >
         <NuxtLink
           to="/dashboard"
           class="bg-blue-500 text-white px-6 py-3 rounded-full text-lg font-semibold hover:bg-blue-600 transition-colors btn-primary"
@@ -43,21 +47,25 @@
 
       <!-- Video placeholder with hover animation -->
       <div
-        class="flex items-center justify-center w-[1200px] h-[600px] rounded-2xl bg-gray-200 transform transition-all hover:scale-[1.02] cursor-pointer"
+        class="flex items-center justify-center w-full sm:w-[800px] h-[400px] rounded-2xl bg-gray-200 transform transition-all hover:scale-[1.02] cursor-pointer"
       >
         <UIcon name="i-lucide-play" class="size-30 animate-pulse" />
       </div>
 
       <!-- Feature cards with staggered animation -->
       <div class="pt-10">
-        <h1 class="text-4xl font-bold text-center mb-6 animate-fade-in">
+        <h1
+          class="text-4xl font-bold text-center mb-6 animate-fade-in sm:text-3xl"
+        >
           Как ИИ ассистент от Team поможет вашему бизнесу
         </h1>
-        <p class="text-2xl text-center text-gray-500 mb-6">
+        <p class="text-2xl text-center text-gray-500 mb-6 sm:text-xl">
           ИИ ассистент от Team поможет вашему бизнесу увеличить конверсию,
           терять меньше клиентов, повысить доходы и сэкономить время
         </p>
-        <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
+        <div
+          class="mt-16 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 w-full"
+        >
           <div
             v-for="(card, index) in featureCards"
             :key="index"
@@ -74,14 +82,16 @@
       </div>
 
       <!-- Integration icons with hover animation -->
-      <div class="pt-10 w-3xl">
-        <h1 class="text-4xl font-bold text-center mb-6">Интеграции</h1>
-        <p class="text-xl text-center text-gray-600 mb-8">
+      <div class="pt-10 w-full sm:w-3xl">
+        <h1 class="text-4xl font-bold text-center mb-6 sm:text-3xl">
+          Интеграции
+        </h1>
+        <p class="text-xl text-center text-gray-600 mb-8 sm:text-lg">
           Подключите ИИ-ассистента от Team к мессенджерам, CRM-системам и другим
           сервисам, которые вы используете, за несколько минут
         </p>
 
-        <div class="flex justify-center gap-8">
+        <div class="flex justify-center gap-8 flex-wrap">
           <div
             v-for="(integration, index) in integrations"
             :key="index"
@@ -100,15 +110,15 @@
 
     <!-- Animated CTA section -->
     <div
-      class="bg-blue-500 w-full h-96 flex flex-col gap-4 items-center py-20 px-40 pt-32 animate-fade-in"
+      class="bg-blue-500 w-full h-auto flex flex-col gap-4 items-center py-20 px-8 pt-32 animate-fade-in sm:px-16"
     >
       <p class="bg-white p-2 rounded-2xl">
         Создайте ИИ-ассистента от Pleep уже сегодня
       </p>
 
-      <h1 class="text-4xl text-white font-bold text-center mb-6">
-        Интересно увидеть как работает ИИ ассистент от Pleep? Cоздайте его прямо
-        сейчас
+      <h1 class="text-4xl text-white font-bold text-center mb-6 sm:text-3xl">
+        Интересно увидеть как работает ИИИ ассистент от Pleep? Cоздайте его
+        прямо сейчас
       </h1>
 
       <NuxtLink
@@ -118,9 +128,8 @@
         Создать ассистента
       </NuxtLink>
     </div>
-
-    <AppFooter />
   </div>
+  <AppFooter />
 </template>
 
 <script setup>
@@ -175,81 +184,3 @@ onMounted(() => {
     });
 });
 </script>
-
-<style>
-/* Keyframe animations */
-@keyframes fade-in {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes slide-up {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animate-fade-in {
-  animation: fade-in 0.6s ease-out forwards;
-  opacity: 0;
-}
-
-.animate-slide-up {
-  animation: slide-up 0.6s ease-out forwards;
-  opacity: 0;
-}
-
-.delay-100 {
-  animation-delay: 100ms;
-}
-.delay-300 {
-  animation-delay: 300ms;
-}
-
-/* Hover animations */
-.btn-primary {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
-}
-
-.feature-card {
-  transition: transform 0.3s ease;
-}
-
-.feature-card:hover {
-  transform: translateY(-5px);
-}
-
-.integration-item {
-  transition: transform 0.3s ease;
-}
-
-.animate-pulse {
-  animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.1);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-</style>

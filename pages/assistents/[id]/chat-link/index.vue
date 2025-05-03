@@ -18,7 +18,7 @@ type Message = {
 
 const messages = ref<Message[]>([
   {
-    id: 1,
+    id: assistantId,
     author: "assistant",
     text: "Hello! How can I help you today?",
     time: new Date().toISOString(),

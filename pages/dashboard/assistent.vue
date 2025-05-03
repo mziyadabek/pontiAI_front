@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import { useNuxtApp } from "#app";
+import { useChatStore } from "~/store/chat";
 
 // Define the expected structure of the API response for knowledge upload
 interface KnowledgeUploadResponse {
@@ -112,19 +113,24 @@ async function fetchAssistants() {
   }
 }
 
+interface Assistant {
+  bussiness_name: string;
+  unique_id: string;
+  chat_url: string;
+}
+
 // Copy the assistant's chat link
 async function copyLink(id: number) {
   try {
     loading.value = true;
-    const response = await $api<{ link: string }>(
-      `/assistants/${id}/chat-link`,
-      {
-        method: "GET",
-      }
-    );
+    const response = await $api<Assistant>(`/assistants/${id}/chat-link`, {
+      method: "GET",
+    });
+    const chatStore = useChatStore();
+    chatStore.setAssistentId(id);
 
-    if (response?.link) {
-      window.open(response.link, "_blank");
+    if (response?.chat_url) {
+      window.open(response.chat_url, "_blank");
     } else {
       alert("No chat link available for this assistant.");
     }
@@ -199,18 +205,8 @@ onMounted(fetchAssistants);
 </script>
 
 <template>
-  <h1 class="text-2xl font-bold mb-4">🤖 Your Assistants</h1>
-
-  <!-- Empty State -->
-  <div
-    v-if="assistants.length === 0"
-    class="flex flex-col items-center gap-4 h-[60vh] justify-center"
-  >
-    <p>
-      You don’t have an assistant yet. It’s a great time to create your first
-      Ponti Assistant!
-    </p>
-
+  <div class="flex flex-row justify-between pb-5">
+    <h1 class="text-2xl font-bold mb-4">Your Assistants</h1>
     <UModal
       v-model="isOpen"
       title="Create a New Assistant"
@@ -219,18 +215,15 @@ onMounted(fetchAssistants);
       <UButton
         label="Create New Assistant +"
         size="xl"
-        class="rounded-full"
+        class="bg-blue-500 text-white hover:bg-blue-600"
         @click="isOpen = true"
       />
       <template #body>
+        <!-- Form for creating assistant -->
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4">
           <div>
             <label class="block text-sm font-medium mb-1">Assistant Name</label>
-            <UInput
-              v-model="assistantName"
-              placeholder="e.g. Alex"
-              class="input-field"
-            />
+            <UInput v-model="assistantName" placeholder="e.g. Alex" />
           </div>
           <div>
             <label class="block text-sm font-medium mb-1"
@@ -240,7 +233,6 @@ onMounted(fetchAssistants);
               v-model="conversationTone"
               :items="tones"
               placeholder="Select tone"
-              class="input-field"
             />
           </div>
           <div class="sm:col-span-2">
@@ -251,16 +243,11 @@ onMounted(fetchAssistants);
               v-model="fallbackAnswer"
               placeholder="Fallback answer"
               autoresize
-              class="input-field"
             />
           </div>
           <div>
             <label class="block text-sm font-medium mb-1">Company Name</label>
-            <UInput
-              v-model="companyName"
-              placeholder="Company Name"
-              class="input-field"
-            />
+            <UInput v-model="companyName" placeholder="Company Name" />
           </div>
           <div>
             <label class="block text-sm font-medium mb-1">Assistant Role</label>
@@ -268,7 +255,6 @@ onMounted(fetchAssistants);
               v-model="assistantRole"
               :items="roles"
               placeholder="Select role"
-              class="input-field"
             />
           </div>
           <div class="sm:col-span-2">
@@ -303,37 +289,160 @@ onMounted(fetchAssistants);
     </UModal>
   </div>
 
-  <!-- Assistants List -->
-  <div v-else class="space-y-4">
-    <UCard
-      v-for="a in assistants"
-      :key="a.id"
-      class="flex items-center justify-between px-6 py-4 border rounded-lg shadow-md"
+  <!-- Empty State -->
+  <div
+    v-if="assistants.length === 0"
+    class="flex flex-col items-center gap-4 h-[60vh] justify-center"
+  >
+    <p>
+      You don’t have an assistant yet. It’s a great time to create your first
+      Ponti Assistant!
+    </p>
+
+    <UModal
+      v-model="isOpen"
+      title="Create a New Assistant"
+      class="modal-container"
     >
-      <span class="font-medium">{{ a.name }}</span>
-      <div class="flex gap-2">
-        <UButton
-          label="Upload Knowledge"
-          size="sm"
-          @click="uploadKnowledge(a.id)"
-          class="text-white bg-blue-500 hover:bg-blue-600"
-        />
-        <UButton
-          label="Get Link"
-          color="primary"
-          size="sm"
-          @click="copyLink(a.id)"
-          :loading="loading"
-        />
-        <UButton
-          label="Delete"
-          size="sm"
-          @click="deleteAssistant(a.id)"
-          :loading="loading"
-          class="bg-red-500 hover:bg-red-600"
-        />
-      </div>
-    </UCard>
+      <UButton
+        label="Create New Assistant +"
+        size="xl"
+        class="bg-blue-500 text-white hover:bg-blue-600"
+        @click="isOpen = true"
+      />
+      <template #body>
+        <div class="w-full flex flex-col gap-4">
+          <div>
+            <label class="block text-sm font-medium mb-1">Assistant Name</label>
+            <UInput
+              v-model="assistantName"
+              placeholder="e.g. Alex"
+              class="w-full"
+            />
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-1"
+              >Tone of Conversation</label
+            >
+            <USelect
+              v-model="conversationTone"
+              :items="tones"
+              placeholder="Select tone"
+              class="w-full"
+            />
+          </div>
+          <div class="sm:col-span-2">
+            <label class="block text-sm font-medium mb-1"
+              >Fallback Answer</label
+            >
+            <UTextarea
+              v-model="fallbackAnswer"
+              placeholder="Fallback answer"
+              autoresize
+              class="w-full"
+            />
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-1">Company Name</label>
+            <UInput
+              v-model="companyName"
+              placeholder="Company Name"
+              class="w-full"
+            />
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-1">Assistant Role</label>
+            <USelect
+              v-model="assistantRole"
+              :items="roles"
+              placeholder="Select role"
+              class="w-full"
+            />
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-1"
+              >Upload file with buisnes information</label
+            >
+            <UInput type="file" class="w-full" />
+          </div>
+        </div>
+      </template>
+
+      <template #footer>
+        <div class="flex w-full justify-end gap-4">
+          <UButton
+            label="Cancel"
+            color="secondary"
+            variant="ghost"
+            size="lg"
+            @click="isOpen = false"
+          />
+          <UButton
+            :loading="loading"
+            label="Create Assistant"
+            color="primary"
+            size="lg"
+            class="bg-blue-500 hover:bg-blue-600 transition duration-300"
+            @click="createAssistant"
+          />
+        </div>
+      </template>
+    </UModal>
+  </div>
+
+  <!-- Assistants Table -->
+  <div v-else>
+    <table
+      class="min-w-full table-auto rounded-lg border-collapse border border-gray-300 shadow-md"
+    >
+      <thead>
+        <tr>
+          <th
+            class="px-6 py-3 text-left bg-gray-100 text-sm font-semibold text-gray-600 border-b"
+          >
+            ID
+          </th>
+          <th
+            class="px-6 py-3 text-left bg-gray-100 text-sm font-semibold text-gray-600 border-b"
+          >
+            Name
+          </th>
+
+          <th
+            class="px-6 py-3 text-left bg-gray-100 text-sm font-semibold text-gray-600 border-b"
+          >
+            Actions
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          v-for="a in assistants"
+          :key="a.id"
+          class="hover:bg-gray-50 transition duration-300"
+        >
+          <td class="px-6 py-4 text-sm text-gray-700 border-b">{{ a.id }}</td>
+          <td class="px-6 py-4 text-sm text-gray-700 border-b">{{ a.name }}</td>
+          <td class="px-6 py-4 border-b">
+            <div class="flex gap-2">
+              <UButton
+                label="Go to The Assistant"
+                size="sm"
+                class="bg-blue-500 text-white hover:bg-blue-600 transition duration-300"
+                @click="copyLink(a.id)"
+              />
+
+              <UButton
+                label="Delete"
+                size="sm"
+                class="bg-red-500 text-white hover:bg-red-600 transition duration-300"
+                @click="deleteAssistant(a.id)"
+              />
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </template>
 
