@@ -26,7 +26,7 @@ onUpdated(() => {
 <template>
   <div class="flex h-full w-full flex-col">
     <div
-      class="flex-1 overflow-y-auto px-4 py-6 space-y-4 max-w-3xl w-full mx-auto"
+      class="flex-1 overflow-y-auto px-4 py-6 space-y-4 max-w-3xl w-full mx-auto pb-24"
     >
       <div
         v-for="msg in messages"

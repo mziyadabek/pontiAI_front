@@ -14,7 +14,9 @@ const handleSubmit = () => {
 </script>
 
 <template>
-  <div class="bg-white dark:bg-gray-900 border-t dark:border-gray-700 z-10">
+  <div
+    class="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-900 border-t dark:border-gray-700 z-10"
+  >
     <form
       class="mx-auto flex w-full max-w-[800px] items-center gap-2 rounded-full border dark:border-gray-700 bg-gray-50 dark:bg-gray-800 px-4 py-2 shadow"
       @submit.prevent="handleSubmit"
