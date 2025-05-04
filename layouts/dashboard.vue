@@ -40,7 +40,9 @@ const logout = async () => {
 
 <template>
   <div class="flex flex-col h-screen">
-    <div class="flex w-full items-center justify-between border-b px-8 py-6">
+    <div
+      class="flex backdrop-blur-sm rounded-full border my-3 w-full py-3 px-4 justify-between"
+    >
       <div class="flex items-center justify-center gap-x-4">
         <a
           href="/"
@@ -115,9 +117,9 @@ const logout = async () => {
       </div>
     </div>
 
-    <div class="flex flex-row h-full">
+    <div class="flex flex-row h-full gap-4 m-4">
       <Sidebar />
-      <main class="flex-1 border px-4 py-6">
+      <main class="flex-1 border rounded-4xl px-4 py-6">
         <NuxtPage />
       </main>
     </div>

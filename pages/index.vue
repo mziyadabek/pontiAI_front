@@ -39,12 +39,13 @@
         >
           Создать ассистента
         </NuxtLink>
-        <NuxtLink
-          to="/consultation"
+        <a
+          href="https://t.me/mziyadabek"
+          target="_blank"
           class="border-2 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 px-6 py-3 rounded-full text-lg font-semibold hover:border-gray-500 hover:text-gray-900 dark:hover:border-gray-400 dark:hover:text-white transition-colors btn-secondary"
         >
           Получить консультацию
-        </NuxtLink>
+        </a>
       </div>
 
       <!-- Video placeholder with hover animation -->

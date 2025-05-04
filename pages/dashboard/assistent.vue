@@ -96,9 +96,16 @@ function resetForm() {
 // Fetch existing assistants
 async function fetchAssistants() {
   try {
-    assistants.value = await $api("/assistants/", {
+    const response = await $api("/assistants/", {
       method: "GET",
     });
+    // Ensure the data is in the correct format
+    assistants.value = Array.isArray(response)
+      ? response.map((assistant) => ({
+          id: assistant.id,
+          name: assistant.name,
+        }))
+      : [];
   } catch (error) {
     console.error("Error fetching assistants:", error);
   }
@@ -200,16 +207,17 @@ onMounted(fetchAssistants);
 </script>
 
 <template>
-  <div class="flex flex-row justify-between pb-5">
-    <h1 class="text-2xl font-bold mb-4">Your Assistants</h1>
+  <div class="flex flex-row justify-between pb-5 m-8">
+    <h1 class="text-xl font-semibold">Your Assistants</h1>
     <UModal
       v-model="isOpen"
       title="Create a New Assistant"
       class="modal-container"
     >
       <UButton
-        label="Create New Assistant +"
-        size="xl"
+        label="Create New"
+        icon="i-heroicons-plus"
+        size="lg"
         class="bg-blue-500 text-white hover:bg-blue-600"
         @click="isOpen = true"
       />
@@ -262,6 +270,10 @@ onMounted(fetchAssistants);
               class="w-full"
             />
           </div>
+          <div>
+            <label class="block text-sm font-medium mb-1">Select File</label>
+            <UInput type="file" @change="handleFileChange" class="w-full" />
+          </div>
         </div>
       </template>
 
@@ -274,12 +286,14 @@ onMounted(fetchAssistants);
             size="lg"
             @click="isOpen = false"
           />
+
           <UButton
             :loading="loading"
             label="Create Assistant"
             color="primary"
             size="lg"
             class="bg-blue-500 hover:bg-blue-600 transition duration-300"
+            :disabled="!knowledgeFile"
             @click="createAssistant"
           />
         </div>
@@ -293,7 +307,7 @@ onMounted(fetchAssistants);
     class="flex flex-col items-center gap-4 h-[60vh] justify-center"
   >
     <p>
-      You don’t have an assistant yet. It’s a great time to create your first
+      You don't have an assistant yet. It's a great time to create your first
       Ponti Assistant!
     </p>
 
@@ -358,10 +372,8 @@ onMounted(fetchAssistants);
             />
           </div>
           <div>
-            <label class="block text-sm font-medium mb-1"
-              >Upload file with buisnes information</label
-            >
-            <UInput type="file" class="w-full" />
+            <label class="block text-sm font-medium mb-1">Select File</label>
+            <UInput type="file" @change="handleFileChange" class="w-full" />
           </div>
         </div>
       </template>
@@ -375,12 +387,14 @@ onMounted(fetchAssistants);
             size="lg"
             @click="isOpen = false"
           />
+
           <UButton
             :loading="loading"
             label="Create Assistant"
             color="primary"
             size="lg"
             class="bg-blue-500 hover:bg-blue-600 transition duration-300"
+            :disabled="!knowledgeFile"
             @click="createAssistant"
           />
         </div>
@@ -389,9 +403,9 @@ onMounted(fetchAssistants);
   </div>
 
   <!-- Assistants Table -->
-  <div v-else>
+  <div v-else class="m-5">
     <table
-      class="min-w-full table-auto rounded-lg border-collapse border border-gray-300 shadow-md"
+      class="min-w-full table-auto rounded-2xl border-collapse border border-gray-300 shadow-md overflow-hidden"
     >
       <thead>
         <tr>
@@ -408,9 +422,7 @@ onMounted(fetchAssistants);
 
           <th
             class="px-6 py-3 text-left bg-gray-100 text-sm font-semibold text-gray-600 border-b"
-          >
-            Actions
-          </th>
+          ></th>
         </tr>
       </thead>
       <tbody>
@@ -422,32 +434,20 @@ onMounted(fetchAssistants);
           <td class="px-6 py-4 text-sm text-gray-700 border-b">{{ a.id }}</td>
           <td class="px-6 py-4 text-sm text-gray-700 border-b">{{ a.name }}</td>
           <td class="px-6 py-4 border-b">
-            <div class="flex gap-2">
+            <div class="flex flex-row gap-2 justify-end">
               <UButton
                 label="Go to The Assistant"
+                icon="i-heroicons-arrow-right"
                 size="sm"
                 class="bg-blue-500 text-white hover:bg-blue-600 transition duration-300"
                 @click="copyLink(a.id)"
               />
 
               <UButton
-                label="Delete"
+                icon="i-heroicons-trash"
                 size="sm"
                 class="bg-red-500 text-white hover:bg-red-600 transition duration-300"
                 @click="deleteAssistant(a.id)"
-              />
-              <div class="mb-4">
-                <label class="block text-sm font-medium mb-1"
-                  >Select File</label
-                >
-                <UInput type="file" @change="handleFileChange" class="w-full" />
-              </div>
-
-              <UButton
-                :loading="loading"
-                label="Upload Knowledge"
-                class="bg-green-500 text-white hover:bg-green-600 transition duration-300"
-                @click="uploadKnowledge(a.id)"
               />
             </div>
           </td>

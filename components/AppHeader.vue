@@ -53,9 +53,13 @@ const goToLogin = () => {
         href="/dashboard"
         >Дэшборд</a
       >
-      <button class="text-sm font-medium hover:underline underline-offset-4">
+      <a
+        href="https://t.me/mziyadabek"
+        target="_blank"
+        class="text-sm font-medium hover:underline underline-offset-4"
+      >
         Консультация
-      </button>
+      </a>
       <a
         class="text-sm font-medium hover:underline underline-offset-4"
         href="/pricing"
@@ -108,13 +112,14 @@ const goToLogin = () => {
             </li>
             <li>
               <a
-                href="/consultion"
+                href="https://t.me/mziyadabek"
+                target="_blank"
                 class="flex gap-1 px-4 py-2 text-black hover:bg-gray-200"
               >
                 <UIcon
                   name="i-lucide-message-circle-question"
                   class="size-5"
-                />Дэшборд
+                />Консультация
               </a>
             </li>
             <li>
