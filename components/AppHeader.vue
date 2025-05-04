@@ -114,7 +114,7 @@ const goToLogin = () => {
               <a
                 href="https://t.me/mziyadabek"
                 target="_blank"
-                class="flex gap-1 px-4 py-2 text-black hover:bg-gray-200"
+                class="flex gap-1 px-4 py-2 text-black hover:bg-gray-200 whitespace-nowrap"
               >
                 <UIcon
                   name="i-lucide-message-circle-question"

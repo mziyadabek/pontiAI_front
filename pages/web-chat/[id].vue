@@ -101,18 +101,21 @@ const handleSend = async (text: string) => {
 </script>
 
 <template>
-  <div class="mt-20 px-4 h-[calc(100vh-80px)] w-full flex flex-col">
-    <h2 class="text-xl font-semibold mb-4 text-center">
+  <div class="h-full w-full flex flex-col">
+    <h2
+      class="text-xl font-semibold mb-4 text-center text-gray-900 dark:text-gray-100"
+    >
       Chatting with: {{ assistantName }}
     </h2>
 
-    <div class="flex-1 overflow-y-auto pb-4">
+    <div class="flex-1 flex flex-col min-h-0">
       <Chat :messages="messages" @send="handleSend" />
-      <!-- Scroll anchor -->
       <div ref="scrollAnchor" />
     </div>
-
-    <div v-if="loading" class="text-center text-sm text-gray-500 mt-2">
+    <div
+      v-if="loading"
+      class="text-center text-sm text-gray-500 dark:text-gray-400 mt-2"
+    >
       Assistant is typing...
     </div>
   </div>

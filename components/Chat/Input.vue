@@ -14,14 +14,17 @@ const handleSubmit = () => {
 </script>
 
 <template>
-  <div class="fixed bottom-0 left-0 right-0 bg-white px-4 py-3 border-t z-10">
+  <div class="bg-white dark:bg-gray-900 border-t dark:border-gray-700 z-10">
     <form
-      class="mx-auto flex w-full max-w-[800px] items-center gap-2 rounded-full border bg-gray-50 px-4 py-2 shadow"
+      class="mx-auto flex w-full max-w-[800px] items-center gap-2 rounded-full border dark:border-gray-700 bg-gray-50 dark:bg-gray-800 px-4 py-2 shadow"
       @submit.prevent="handleSubmit"
     >
       <!-- Attachment Button -->
       <UButton color="neutral" variant="ghost" size="sm" class="flex-shrink-0">
-        <UIcon name="lucide:paperclip" class="text-gray-500" />
+        <UIcon
+          name="lucide:paperclip"
+          class="text-gray-500 dark:text-gray-400"
+        />
       </UButton>
 
       <!-- Chat Input -->
@@ -30,12 +33,12 @@ const handleSubmit = () => {
         variant="soft"
         placeholder="Ask anything ..."
         class="flex-1 border-none bg-transparent px-2 focus:ring-0"
-        input-class="bg-transparent"
+        input-class="bg-transparent dark:bg-transparent dark:text-gray-200"
       />
 
       <!-- Mic Button -->
       <UButton color="neutral" variant="ghost" size="sm" class="flex-shrink-0">
-        <UIcon name="lucide:mic" class="text-gray-500" />
+        <UIcon name="lucide:mic" class="text-gray-500 dark:text-gray-400" />
       </UButton>
 
       <!-- Send Button -->
@@ -48,7 +51,5 @@ const handleSubmit = () => {
         <Icon name="lucide:arrow-up" class="h-4 w-4" />
       </UButton>
     </form>
-
-    <p class="mt-2 text-center text-xs text-gray-400">Ask anything ....</p>
   </div>
 </template>
