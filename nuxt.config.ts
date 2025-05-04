@@ -19,5 +19,15 @@ export default defineNuxtConfig({
 
   css: ['~/assets/css/main.css'],
 
-  app: { head: {} }
+  app: { 
+    head: {},
+    pageTransition: { name: 'page', mode: 'out-in' }
+  },
+
+  colorMode: {
+    preference: 'system',
+    fallback: 'light',
+    classSuffix: '',
+    storageKey: 'nuxt-color-mode'
+  }
 })
