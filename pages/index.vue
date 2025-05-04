@@ -2,7 +2,9 @@
   <div class="flex flex-col w-full h-full gap-5 items-center">
     <AppHeader />
 
-    <div class="flex flex-col gap-4 items-center bg-white px-8 sm:px-16">
+    <div
+      class="flex flex-col gap-4 items-center bg-white dark:bg-gray-900 px-8 sm:px-16"
+    >
       <!-- Animated Badge -->
       <UBadge
         size="xl"
@@ -15,12 +17,12 @@
 
       <!-- Animated Headings -->
       <h1
-        class="text-4xl font-bold text-center mb-6 animate-slide-up sm:text-3xl"
+        class="text-4xl font-bold text-center mb-6 animate-slide-up sm:text-3xl dark:text-white"
       >
         Создайте ИИ-ассистента для бизнеса за 5 минут
       </h1>
       <p
-        class="text-2xl text-center text-gray-500 mb-6 animate-slide-up delay-100 sm:text-xl"
+        class="text-2xl text-center text-gray-500 dark:text-gray-300 mb-6 animate-slide-up delay-100 sm:text-xl"
       >
         Автоматизируйте коммуникации с клиентами уже сегодня и повысьте
         конверсию в целевое действие на 11%. Pleep позволит вам сделать это
@@ -39,7 +41,7 @@
         </NuxtLink>
         <NuxtLink
           to="/consultation"
-          class="border-2 border-gray-300 text-gray-700 px-6 py-3 rounded-full text-lg font-semibold hover:border-gray-500 hover:text-gray-900 transition-colors btn-secondary"
+          class="border-2 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 px-6 py-3 rounded-full text-lg font-semibold hover:border-gray-500 hover:text-gray-900 dark:hover:border-gray-400 dark:hover:text-white transition-colors btn-secondary"
         >
           Получить консультацию
         </NuxtLink>
@@ -47,19 +49,24 @@
 
       <!-- Video placeholder with hover animation -->
       <div
-        class="flex items-center justify-center w-full sm:w-[800px] h-[400px] rounded-2xl bg-gray-200 transform transition-all hover:scale-[1.02] cursor-pointer"
+        class="flex items-center justify-center w-full sm:w-[800px] h-[400px] rounded-2xl bg-gray-200 dark:bg-gray-800 transform transition-all hover:scale-[1.02] cursor-pointer"
       >
-        <UIcon name="i-lucide-play" class="size-30 animate-pulse" />
+        <UIcon
+          name="i-lucide-play"
+          class="size-30 animate-pulse text-gray-700 dark:text-gray-300"
+        />
       </div>
 
       <!-- Feature cards with staggered animation -->
       <div class="pt-10">
         <h1
-          class="text-4xl font-bold text-center mb-6 animate-fade-in sm:text-3xl"
+          class="text-4xl font-bold text-center mb-6 animate-fade-in sm:text-3xl dark:text-white"
         >
           Как ИИ ассистент от Team поможет вашему бизнесу
         </h1>
-        <p class="text-2xl text-center text-gray-500 mb-6 sm:text-xl">
+        <p
+          class="text-2xl text-center text-gray-500 dark:text-gray-300 mb-6 sm:text-xl"
+        >
           ИИ ассистент от Team поможет вашему бизнесу увеличить конверсию,
           терять меньше клиентов, повысить доходы и сэкономить время
         </p>
@@ -69,24 +76,32 @@
           <div
             v-for="(card, index) in featureCards"
             :key="index"
-            class="bg-white p-6 rounded-xl shadow-md text-center feature-card animate-fade-in"
+            class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md text-center feature-card animate-fade-in"
             :style="`animation-delay: ${index * 200}ms;`"
           >
             <div :class="`text-4xl font-bold ${card.color}`">
               {{ card.value }}
             </div>
-            <h2 class="text-xl font-semibold mt-4">{{ card.title }}</h2>
-            <p class="text-gray-500 mt-2">{{ card.description }}</p>
+            <h2 class="text-xl font-semibold mt-4 dark:text-white">
+              {{ card.title }}
+            </h2>
+            <p class="text-gray-500 dark:text-gray-300 mt-2">
+              {{ card.description }}
+            </p>
           </div>
         </div>
       </div>
 
       <!-- Integration icons with hover animation -->
       <div class="pt-10 w-full sm:w-3xl">
-        <h1 class="text-4xl font-bold text-center mb-6 sm:text-3xl">
+        <h1
+          class="text-4xl font-bold text-center mb-6 sm:text-3xl dark:text-white"
+        >
           Интеграции
         </h1>
-        <p class="text-xl text-center text-gray-600 mb-8 sm:text-lg">
+        <p
+          class="text-xl text-center text-gray-600 dark:text-gray-300 mb-8 sm:text-lg"
+        >
           Подключите ИИ-ассистента от Team к мессенджерам, CRM-системам и другим
           сервисам, которые вы используете, за несколько минут
         </p>
@@ -100,9 +115,9 @@
           >
             <UIcon
               :name="integration.icon"
-              class="size-10 hover:scale-110 transition-transform"
+              class="size-10 hover:scale-110 transition-transform text-gray-700 dark:text-gray-300"
             />
-            <p>{{ integration.name }}</p>
+            <p class="dark:text-gray-300">{{ integration.name }}</p>
           </div>
         </div>
       </div>
