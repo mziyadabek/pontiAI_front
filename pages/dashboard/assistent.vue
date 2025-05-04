@@ -39,17 +39,8 @@ const roles = [
 ];
 
 // Handle file upload event
-function handleFileUpload(e: Event) {
-  const file = (e.target as HTMLInputElement).files?.[0];
 
-  if (file && (file.type === "application/pdf" || file.type === "text/plain")) {
-    businessFile.value = file;
-  } else {
-    alert("Only PDF or TXT files are allowed.");
-    businessFile.value = null;
-  }
-}
-
+// Create a new assistant
 // Create a new assistant
 async function createAssistant() {
   loading.value = true;
@@ -142,19 +133,20 @@ async function copyLink(id: number) {
   }
 }
 
-// Upload knowledge base file for the assistant
+const knowledgeFile = ref<File | null>(null);
+
 async function uploadKnowledge(assistantId: number) {
-  if (!businessFile.value) {
-    alert("Please upload a knowledge base document first.");
+  if (!knowledgeFile.value) {
+    alert("Please select a file to upload.");
     return;
   }
 
   const formData = new FormData();
-  formData.append("file", businessFile.value);
+  formData.append("file", knowledgeFile.value);
 
   try {
     loading.value = true;
-    // Make the POST request to upload the knowledge base file
+
     const response = await $api<KnowledgeUploadResponse>(
       `/assistants/${assistantId}/upload-knowledge`,
       {
@@ -163,21 +155,25 @@ async function uploadKnowledge(assistantId: number) {
       }
     );
 
-    // Check if the response status is 200 (success)
     if (response.status === 200) {
       alert("Knowledge base uploaded successfully.");
+      knowledgeFile.value = null;
     } else {
-      alert("Failed to upload knowledge base.");
+      alert(`Upload failed: ${response.message || "Unknown error"}`);
     }
   } catch (error) {
-    console.error("Error uploading knowledge base:", error);
-    alert("Failed to upload knowledge base.");
+    console.error("Upload error:", error);
+    alert("Upload failed.");
   } finally {
     loading.value = false;
   }
 }
 
-// Delete an assistant
+function handleFileChange(event: Event) {
+  const target = event.target as HTMLInputElement;
+  knowledgeFile.value = target.files ? target.files[0] : null;
+}
+
 async function deleteAssistant(assistantId: number) {
   const confirmation = confirm(
     "Are you sure you want to delete this assistant?"
@@ -200,7 +196,6 @@ async function deleteAssistant(assistantId: number) {
   }
 }
 
-// Fetch assistants when the component is mounted
 onMounted(fetchAssistants);
 </script>
 
@@ -219,11 +214,14 @@ onMounted(fetchAssistants);
         @click="isOpen = true"
       />
       <template #body>
-        <!-- Form for creating assistant -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4">
+        <div class="w-full flex flex-col gap-4">
           <div>
             <label class="block text-sm font-medium mb-1">Assistant Name</label>
-            <UInput v-model="assistantName" placeholder="e.g. Alex" />
+            <UInput
+              v-model="assistantName"
+              placeholder="e.g. Alex"
+              class="w-full"
+            />
           </div>
           <div>
             <label class="block text-sm font-medium mb-1"
@@ -233,6 +231,7 @@ onMounted(fetchAssistants);
               v-model="conversationTone"
               :items="tones"
               placeholder="Select tone"
+              class="w-full"
             />
           </div>
           <div class="sm:col-span-2">
@@ -243,11 +242,16 @@ onMounted(fetchAssistants);
               v-model="fallbackAnswer"
               placeholder="Fallback answer"
               autoresize
+              class="w-full"
             />
           </div>
           <div>
             <label class="block text-sm font-medium mb-1">Company Name</label>
-            <UInput v-model="companyName" placeholder="Company Name" />
+            <UInput
+              v-model="companyName"
+              placeholder="Company Name"
+              class="w-full"
+            />
           </div>
           <div>
             <label class="block text-sm font-medium mb-1">Assistant Role</label>
@@ -255,33 +259,27 @@ onMounted(fetchAssistants);
               v-model="assistantRole"
               :items="roles"
               placeholder="Select role"
+              class="w-full"
             />
-          </div>
-          <div class="sm:col-span-2">
-            <label class="block text-sm font-medium mb-1"
-              >Business Profile PDF (optional)</label
-            >
-            <input
-              type="file"
-              accept="application/pdf"
-              @change="handleFileUpload"
-              class="file:mr-4 file:rounded file:px-4 file:py-2 file:border-0 file:bg-primary file:text-white"
-            />
-            <span v-if="businessFile" class="text-sm text-gray-500 mt-2">{{
-              businessFile.name
-            }}</span>
           </div>
         </div>
       </template>
 
       <template #footer>
-        <div class="flex justify-end gap-4 p-4">
+        <div class="flex w-full justify-end gap-4">
+          <UButton
+            label="Cancel"
+            color="secondary"
+            variant="ghost"
+            size="lg"
+            @click="isOpen = false"
+          />
           <UButton
             :loading="loading"
             label="Create Assistant"
             color="primary"
             size="lg"
-            class="rounded-full"
+            class="bg-blue-500 hover:bg-blue-600 transition duration-300"
             @click="createAssistant"
           />
         </div>
@@ -437,6 +435,19 @@ onMounted(fetchAssistants);
                 size="sm"
                 class="bg-red-500 text-white hover:bg-red-600 transition duration-300"
                 @click="deleteAssistant(a.id)"
+              />
+              <div class="mb-4">
+                <label class="block text-sm font-medium mb-1"
+                  >Select File</label
+                >
+                <UInput type="file" @change="handleFileChange" class="w-full" />
+              </div>
+
+              <UButton
+                :loading="loading"
+                label="Upload Knowledge"
+                class="bg-green-500 text-white hover:bg-green-600 transition duration-300"
+                @click="uploadKnowledge(a.id)"
               />
             </div>
           </td>
