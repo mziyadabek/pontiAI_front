@@ -67,26 +67,34 @@ const handleSend = async (text: string) => {
   scrollToBottom();
 
   try {
-    const assistantReply = await $api<{ response: string }>(
-      `/assistants/${assistantId}/chat`,
+    const response = await fetch(
+      `https://ai-assistant-backend-cxb2.onrender.com/assistants/${assistantId}/chat`,
       {
         method: "POST",
-        body: {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer YOUR_TOKEN_HERE",
+        },
+        body: JSON.stringify({
           text: userMsg.text,
           tone: "normal",
           business_type: "selling",
-        },
+          language: "string",
+        }),
       }
     );
+
+    const data = await response.json();
+    console.log("Response:", data); // Log the response to check if it contains the message
 
     messages.value.push({
       id: messages.value.length + 1,
       author: "assistant",
-      text: assistantReply.response,
+      text: data.response,
       time: new Date().toISOString(),
     });
   } catch (error) {
-    console.error("Chat error:", error);
+    console.error("Error sending message:", error);
     messages.value.push({
       id: messages.value.length + 1,
       author: "assistant",
