@@ -405,23 +405,22 @@ onMounted(fetchAssistants);
   <!-- Assistants Table -->
   <div v-else class="m-5">
     <table
-      class="min-w-full table-auto rounded-2xl border-collapse border border-gray-300 shadow-md overflow-hidden"
+      class="min-w-full table-auto rounded-2xl border-collapse border border-gray-200 dark:border-gray-700 shadow-md overflow-hidden bg-white dark:bg-gray-800"
     >
       <thead>
         <tr>
           <th
-            class="px-6 py-3 text-left bg-gray-100 text-sm font-semibold text-gray-600 border-b"
+            class="px-6 py-3 text-left bg-gray-50 dark:bg-gray-700 text-sm font-semibold text-gray-600 dark:text-gray-300 border-b border-gray-200 dark:border-gray-600"
           >
             ID
           </th>
           <th
-            class="px-6 py-3 text-left bg-gray-100 text-sm font-semibold text-gray-600 border-b"
+            class="px-6 py-3 text-left bg-gray-50 dark:bg-gray-700 text-sm font-semibold text-gray-600 dark:text-gray-300 border-b border-gray-200 dark:border-gray-600"
           >
             Name
           </th>
-
           <th
-            class="px-6 py-3 text-left bg-gray-100 text-sm font-semibold text-gray-600 border-b"
+            class="px-6 py-3 text-left bg-gray-50 dark:bg-gray-700 text-sm font-semibold text-gray-600 dark:text-gray-300 border-b border-gray-200 dark:border-gray-600"
           ></th>
         </tr>
       </thead>
@@ -429,11 +428,19 @@ onMounted(fetchAssistants);
         <tr
           v-for="a in assistants"
           :key="a.id"
-          class="hover:bg-gray-50 transition duration-300"
+          class="hover:bg-gray-50 dark:hover:bg-gray-700 transition duration-300"
         >
-          <td class="px-6 py-4 text-sm text-gray-700 border-b">{{ a.id }}</td>
-          <td class="px-6 py-4 text-sm text-gray-700 border-b">{{ a.name }}</td>
-          <td class="px-6 py-4 border-b">
+          <td
+            class="px-6 py-4 text-sm text-gray-700 dark:text-gray-300 border-b border-gray-200 dark:border-gray-600"
+          >
+            {{ a.id }}
+          </td>
+          <td
+            class="px-6 py-4 text-sm text-gray-700 dark:text-gray-300 border-b border-gray-200 dark:border-gray-600"
+          >
+            {{ a.name }}
+          </td>
+          <td class="px-6 py-4 border-b border-gray-200 dark:border-gray-600">
             <div class="flex flex-row gap-2 justify-end">
               <UButton
                 label="Go to The Assistant"
