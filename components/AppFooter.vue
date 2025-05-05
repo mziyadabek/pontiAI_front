@@ -5,9 +5,7 @@
     >
       <!-- Logo and Text -->
       <div class="flex flex-col items-center mb-4 lg:mb-0">
-        <h1 class="text-2xl font-bold text-gray-900 dark:text-white">
-          Tan'dau
-        </h1>
+        <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Ponti</h1>
         <span class="font-semibold text-lg text-gray-600 dark:text-gray-300"
           >AI Assistant Creation Service</span
         >

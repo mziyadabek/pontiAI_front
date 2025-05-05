@@ -209,7 +209,7 @@
     <div
       class="bg-blue-500 w-full h-auto flex flex-col gap-4 items-center py-20 px-4 sm:px-6 lg:px-8 pt-32 animate-fade-in"
     >
-      <p class="bg-white p-2 rounded-2xl">
+      <p class="bg-white dark:bg-gray-900 p-2 rounded-2xl">
         Create Your Ponti AI Assistant Today
       </p>
 
