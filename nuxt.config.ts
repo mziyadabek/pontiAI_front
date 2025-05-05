@@ -13,7 +13,7 @@ export default defineNuxtConfig({
   plugins: ['~/plugins/pinia'],
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
-  modules: ['@nuxt/ui'],
+  modules: ['@nuxt/ui', '@nuxt/image'],
 
   vite: { plugins: [tailwindcss()] },
 

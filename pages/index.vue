@@ -3,7 +3,7 @@
     <AppHeader />
 
     <div
-      class="flex flex-col gap-4 items-center bg-white dark:bg-gray-900 px-8 sm:px-16"
+      class="flex flex-col gap-4 items-center bg-white dark:bg-gray-900 w-full max-w-full mx-auto px-4 sm:px-6 lg:px-8"
     >
       <!-- Animated Badge -->
       <UBadge
@@ -12,21 +12,21 @@
         variant="subtle"
         class="rounded-full animate-fade-in"
       >
-        🚀 Представляем новый стандарт ИИ-ассистентов
+        🚀 Introducing the New Standard of AI Assistants
       </UBadge>
 
       <!-- Animated Headings -->
       <h1
-        class="text-4xl font-bold text-center mb-6 animate-slide-up sm:text-3xl dark:text-white"
+        class="text-6xl font-bold text-center mb-6 animate-slide-up sm:text-3xl dark:text-white"
       >
-        Создайте ИИ-ассистента для бизнеса за 5 минут
+        Create an AI Assistant for Your Business in 5 Minutes
       </h1>
       <p
-        class="text-2xl text-center text-gray-500 dark:text-gray-300 mb-6 animate-slide-up delay-100 sm:text-xl"
+        class="text-2xl w-xl flex text-center text-gray-500 dark:text-gray-300 mb-6 animate-slide-up delay-100 sm:text-xl"
       >
-        Автоматизируйте коммуникации с клиентами уже сегодня и повысьте
-        конверсию в целевое действие на 11%. Pleep позволит вам сделать это
-        быстро и качественно.
+        Without any knowledge of AI and integrate it with your services. The
+        ecosystem from Team will make the whole process as simple and fast as
+        possible.
       </p>
 
       <!-- Animated Buttons -->
@@ -37,25 +37,22 @@
           to="/dashboard"
           class="bg-blue-500 text-white px-6 py-3 rounded-full text-lg font-semibold hover:bg-blue-600 transition-colors btn-primary"
         >
-          Создать ассистента
+          Create Assistant
         </NuxtLink>
         <a
           href="https://t.me/mziyadabek"
           target="_blank"
           class="border-2 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 px-6 py-3 rounded-full text-lg font-semibold hover:border-gray-500 hover:text-gray-900 dark:hover:border-gray-400 dark:hover:text-white transition-colors btn-secondary"
         >
-          Получить консультацию
+          Get Consultation
         </a>
       </div>
 
       <!-- Video placeholder with hover animation -->
       <div
-        class="flex items-center justify-center w-full sm:w-[800px] h-[400px] rounded-2xl bg-gray-200 dark:bg-gray-800 transform transition-all hover:scale-[1.02] cursor-pointer"
+        class="w-full max-w-7xl mx-auto bg-gray-200 rounded-2xl aspect-video flex items-center justify-center text-xl font-medium text-black my-6"
       >
-        <UIcon
-          name="i-lucide-play"
-          class="size-30 animate-pulse text-gray-700 dark:text-gray-300"
-        />
+        Видео
       </div>
 
       <!-- Feature cards with staggered animation -->
@@ -63,13 +60,13 @@
         <h1
           class="text-4xl font-bold text-center mb-6 animate-fade-in sm:text-3xl dark:text-white"
         >
-          Как ИИ ассистент от Team поможет вашему бизнесу
+          How Ponti AI Assistant Can Help Your Business
         </h1>
         <p
           class="text-2xl text-center text-gray-500 dark:text-gray-300 mb-6 sm:text-xl"
         >
-          ИИ ассистент от Team поможет вашему бизнесу увеличить конверсию,
-          терять меньше клиентов, повысить доходы и сэкономить время
+          Ponti AI Assistant helps your business increase conversion, reduce
+          customer loss, boost revenue, and save time
         </p>
         <div
           class="mt-16 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 w-full"
@@ -93,32 +90,116 @@
         </div>
       </div>
 
+      <!-- Use Cases Block -->
+      <section
+        class="w-full bg-gray-50 dark:bg-gray-900 py-20 px-4 sm:px-6 lg:px-8 mb-10"
+      >
+        <div class="text-center mb-12">
+          <div class="text-lg text-gray-500 dark:text-gray-400 mb-2">
+            Use Cases
+          </div>
+          <h2 class="text-4xl font-extrabold mb-4 dark:text-white">
+            How Our Clients Use Ponti
+          </h2>
+          <div class="text-xl text-gray-500 dark:text-gray-300">
+            Examples of AI assistants created by our clients in Team
+          </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          <div class="flex flex-col items-center text-center">
+            <div class="bg-white dark:bg-gray-800 rounded-xl p-4 mb-4 shadow">
+              <UIcon
+                name="i-lucide-dollar-sign"
+                class="text-3xl text-gray-900 dark:text-white"
+              />
+            </div>
+            <h3 class="text-lg font-bold mb-2 dark:text-white">
+              Sales Manager
+            </h3>
+            <p class="text-gray-500 dark:text-gray-300">
+              Consults clients and closes deals
+            </p>
+          </div>
+          <div class="flex flex-col items-center text-center">
+            <div class="bg-white dark:bg-gray-800 rounded-xl p-4 mb-4 shadow">
+              <UIcon
+                name="i-lucide-wrench"
+                class="text-3xl text-gray-900 dark:text-white"
+              />
+            </div>
+            <h3 class="text-lg font-bold mb-2 dark:text-white">
+              Tech Support Specialist
+            </h3>
+            <p class="text-gray-500 dark:text-gray-300">
+              Helps clients solve their technical issues
+            </p>
+          </div>
+          <div class="flex flex-col items-center text-center">
+            <div class="bg-white dark:bg-gray-800 rounded-xl p-4 mb-4 shadow">
+              <UIcon
+                name="i-lucide-message-square"
+                class="text-3xl text-gray-900 dark:text-white"
+              />
+            </div>
+            <h3 class="text-lg font-bold mb-2 dark:text-white">Consultant</h3>
+            <p class="text-gray-500 dark:text-gray-300">
+              Advises clients on product-related questions
+            </p>
+          </div>
+        </div>
+      </section>
+
       <!-- Integration icons with hover animation -->
       <div class="pt-10 w-full sm:w-3xl">
         <h1
           class="text-4xl font-bold text-center mb-6 sm:text-3xl dark:text-white"
         >
-          Интеграции
+          No Integrations Required
         </h1>
         <p
           class="text-xl text-center text-gray-600 dark:text-gray-300 mb-8 sm:text-lg"
         >
-          Подключите ИИ-ассистента от Team к мессенджерам, CRM-системам и другим
-          сервисам, которые вы используете, за несколько минут
+          Clients can directly connect to the AI assistant on our platform,
+          allowing for real-time interaction. This seamless connection enables
+          users to get quick answers, solve problems, and receive personalized
+          assistance, enhancing their overall experience.
         </p>
 
-        <div class="flex justify-center gap-8 flex-wrap">
-          <div
-            v-for="(integration, index) in integrations"
-            :key="index"
-            class="integration-item animate-slide-up text-center"
-            :style="`animation-delay: ${index * 100}ms;`"
-          >
-            <UIcon
-              :name="integration.icon"
-              class="size-10 hover:scale-110 transition-transform text-gray-700 dark:text-gray-300"
-            />
-            <p class="dark:text-gray-300">{{ integration.name }}</p>
+        <div class="flex flex-col justify-center text-center gap-8">
+          <!-- First row of icons -->
+          <div class="flex justify-center gap-8">
+            <div
+              v-for="(integration, index) in integrations.slice(0, 3)"
+              :key="index"
+              class="integration-item animate-slide-up text-center w-32"
+              :style="`animation-delay: ${index * 100}ms;`"
+            >
+              <UIcon
+                :name="integration.icon"
+                class="size-10 hover:scale-110 transition-transform text-gray-700 dark:text-gray-300 mx-auto"
+              />
+              <p class="dark:text-gray-300 text-base font-semibold mt-2">
+                {{ integration.name }}
+              </p>
+            </div>
+          </div>
+
+          <!-- Second row of icons -->
+          <div class="flex justify-center gap-8">
+            <div
+              v-for="(integration, index) in integrations.slice(3, 6)"
+              :key="index + 3"
+              class="integration-item animate-slide-up text-center w-32"
+              :style="`animation-delay: ${(index + 3) * 100}ms;`"
+            >
+              <UIcon
+                :name="integration.icon"
+                class="size-10 hover:scale-110 transition-transform text-gray-700 dark:text-gray-300 mx-auto"
+              />
+              <p class="dark:text-gray-300 text-base font mt-2">
+                {{ integration.name }}
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -126,24 +207,183 @@
 
     <!-- Animated CTA section -->
     <div
-      class="bg-blue-500 w-full h-auto flex flex-col gap-4 items-center py-20 px-8 pt-32 animate-fade-in sm:px-16"
+      class="bg-blue-500 w-full h-auto flex flex-col gap-4 items-center py-20 px-4 sm:px-6 lg:px-8 pt-32 animate-fade-in"
     >
       <p class="bg-white p-2 rounded-2xl">
-        Создайте ИИ-ассистента от Pleep уже сегодня
+        Create Your Ponti AI Assistant Today
       </p>
 
       <h1 class="text-4xl text-white font-bold text-center mb-6 sm:text-3xl">
-        Интересно увидеть как работает ИИИ ассистент от Pleep? Cоздайте его
-        прямо сейчас
+        Want to see how Ponti AI Assistant works? Create one right now
       </h1>
 
       <NuxtLink
         to="/create-assistant"
         class="bg-black text-white px-6 py-3 rounded-full text-lg font-semibold transition-colors"
       >
-        Создать ассистента
+        Create Assistant
       </NuxtLink>
     </div>
+
+    <!-- Pricing Section -->
+    <section class="w-full bg-gray-50 dark:bg-gray-900 py-20">
+      <div class="container mx-auto px-4">
+        <h2 class="text-4xl font-bold text-center mb-12 dark:text-white">
+          Simple, Transparent Pricing
+        </h2>
+
+        <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          <!-- Basic Plan -->
+          <div
+            class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 transform hover:scale-105 transition-transform duration-300"
+          >
+            <div class="text-center">
+              <h3 class="text-2xl font-bold mb-4 dark:text-white">Basic</h3>
+              <div class="text-4xl font-bold mb-6 dark:text-white">
+                $29<span class="text-lg text-gray-500">/month</span>
+              </div>
+              <ul class="space-y-4 mb-8">
+                <li class="flex items-center dark:text-gray-300">
+                  <UIcon name="i-lucide-check" class="text-green-500 mr-2" />
+                  Up to 100 messages/month
+                </li>
+                <li class="flex items-center dark:text-gray-300">
+                  <UIcon name="i-lucide-check" class="text-green-500 mr-2" />
+                  Basic AI responses
+                </li>
+                <li class="flex items-center dark:text-gray-300">
+                  <UIcon name="i-lucide-check" class="text-green-500 mr-2" />
+                  Email support
+                </li>
+              </ul>
+              <button
+                class="w-full bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-white py-3 rounded-lg font-semibold hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+              >
+                Get Started
+              </button>
+            </div>
+          </div>
+
+          <!-- Pro Plan -->
+          <div
+            class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 transform hover:scale-105 transition-transform duration-300 border-2 border-blue-500"
+          >
+            <div class="text-center">
+              <div
+                class="bg-blue-500 text-white text-sm font-semibold py-1 px-3 rounded-full inline-block mb-4"
+              >
+                Most Popular
+              </div>
+              <h3 class="text-2xl font-bold mb-4 dark:text-white">Pro</h3>
+              <div class="text-4xl font-bold mb-6 dark:text-white">
+                $99<span class="text-lg text-gray-500">/month</span>
+              </div>
+              <ul class="space-y-4 mb-8">
+                <li class="flex items-center dark:text-gray-300">
+                  <UIcon name="i-lucide-check" class="text-green-500 mr-2" />
+                  Unlimited messages
+                </li>
+                <li class="flex items-center dark:text-gray-300">
+                  <UIcon name="i-lucide-check" class="text-green-500 mr-2" />
+                  Advanced AI responses
+                </li>
+                <li class="flex items-center dark:text-gray-300">
+                  <UIcon name="i-lucide-check" class="text-green-500 mr-2" />
+                  Priority support
+                </li>
+                <li class="flex items-center dark:text-gray-300">
+                  <UIcon name="i-lucide-check" class="text-green-500 mr-2" />
+                  Custom integrations
+                </li>
+              </ul>
+              <button
+                class="w-full bg-blue-500 text-white py-3 rounded-lg font-semibold hover:bg-blue-600 transition-colors"
+              >
+                Get Started
+              </button>
+            </div>
+          </div>
+
+          <!-- Enterprise Plan -->
+          <div
+            class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 transform hover:scale-105 transition-transform duration-300"
+          >
+            <div class="text-center">
+              <h3 class="text-2xl font-bold mb-4 dark:text-white">
+                Enterprise
+              </h3>
+              <div class="text-4xl font-bold mb-6 dark:text-white">Custom</div>
+              <ul class="space-y-4 mb-8">
+                <li class="flex items-center dark:text-gray-300">
+                  <UIcon name="i-lucide-check" class="text-green-500 mr-2" />
+                  Everything in Pro
+                </li>
+                <li class="flex items-center dark:text-gray-300">
+                  <UIcon name="i-lucide-check" class="text-green-500 mr-2" />
+                  Dedicated support
+                </li>
+                <li class="flex items-center dark:text-gray-300">
+                  <UIcon name="i-lucide-check" class="text-green-500 mr-2" />
+                  Custom AI training
+                </li>
+                <li class="flex items-center dark:text-gray-300">
+                  <UIcon name="i-lucide-check" class="text-green-500 mr-2" />
+                  SLA guarantee
+                </li>
+              </ul>
+              <button
+                class="w-full bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-white py-3 rounded-lg font-semibold hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+              >
+                Contact Sales
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="flex w-full flex-col gap-20 p-20">
+      <h2
+        class="m-auto flex items-center gap-4 text-4xl font-semibold dark:text-white"
+      >
+        Our Partners
+      </h2>
+
+      <div class="grid grid-cols-4 justify-items-center gap-16">
+        <NuxtImg
+          src="/partners/partner-1.png"
+          class="h-40 w-40 object-contain"
+        />
+        <NuxtImg
+          src="/partners/partner-2.png"
+          class="h-40 w-40 object-contain"
+        />
+        <NuxtImg
+          src="/partners/partner-3.png"
+          class="h-40 w-40 object-contain"
+        />
+        <NuxtImg
+          src="/partners/partner-4.png"
+          class="h-40 w-40 object-contain"
+        />
+        <NuxtImg
+          src="/partners/partner-5.png"
+          class="h-40 w-40 object-contain"
+        />
+        <NuxtImg
+          src="/partners/partner-6.png"
+          class="h-40 w-40 object-contain"
+        />
+        <NuxtImg
+          src="/partners/partner-7.png"
+          class="h-40 w-40 object-contain"
+        />
+        <NuxtImg
+          src="/partners/partner-8.png"
+          class="h-40 w-40 object-contain"
+        />
+      </div>
+    </section>
   </div>
   <AppFooter />
 </template>
@@ -155,32 +395,35 @@ import { onMounted } from "vue";
 const featureCards = [
   {
     value: "+11%",
-    title: "Увеличение конверсии в покупку",
+    title: "Increase in Purchase Conversion",
     description:
-      "ИИ ассистент от Team плавно подведет вашего клиента к сделке и повысит конверсию в покупку.",
+      "Ponti AI Assistant smoothly guides your customer to a deal and increases purchase conversion.",
     color: "text-green-500",
   },
   {
-    value: "7 секунд",
-    title: "Круглосуточные скоростные ответы",
+    value: "7 seconds",
+    title: "24/7 Fast Response Time",
     description:
-      "ИИ ассистент от Team будет отвечать за 7 секунд и поможет обслуживать ваших клиентов 24/7.",
+      "Ponti AI Assistant responds within 7 seconds and helps serve your customers 24/7.",
     color: "text-blue-500",
   },
   {
-    value: "+100 заявок",
-    title: "Неограниченная обработка заявок",
+    value: "+100 requests",
+    title: "Unlimited Request Processing",
     description:
-      "Легко масштабируйте количество заявок без дополнительных затрат и ресурсов на найм и обучение сотрудников.",
+      "Easily scale the number of requests without additional costs and resources for hiring and training staff.",
     color: "text-green-500",
   },
 ];
 
 // Integrations data
 const integrations = [
-  { icon: "i-lucide-send", name: "Telegram" },
-  { icon: "i-lucide-instagram", name: "Instagram" },
-  { icon: "i-heroicons-chat-bubble-oval-left-ellipsis", name: "WhatsApp" },
+  { icon: "i-lucide-bot", name: "AI Assistant" },
+  { icon: "i-lucide-message-square", name: "Direct Chat" },
+  { icon: "i-lucide-zap", name: "Instant Response" },
+  { icon: "i-lucide-shield-check", name: "Secure Platform" },
+  { icon: "i-lucide-globe", name: "Web Access" },
+  { icon: "i-lucide-smartphone", name: "Mobile Ready" },
 ];
 
 // Intersection Observer setup

@@ -39,7 +39,7 @@ const activeRoute = (link: string) => {
 
 <template>
   <div
-    class="sticky top-0 rounded-4xl hidden h-full w-[240px] flex-shrink-0 flex-col gap-6 overflow-auto border border-gray-200 dark:border-gray-700 px-4 py-6 md:flex bg-white dark:bg-gray-800"
+    class="sticky top-0 rounded-4xl hidden h-full w-[280px] flex-shrink-0 flex-col gap-6 overflow-auto border border-gray-200 dark:border-gray-700 px-4 py-6 md:flex bg-white dark:bg-gray-800"
   >
     <!-- card -->
     <div

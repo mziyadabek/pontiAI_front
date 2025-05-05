@@ -1,69 +1,56 @@
 <template>
-  <footer class="bg-gray-50 flex flex-col py-10 w-full h-full">
+  <footer class="bg-gray-50 dark:bg-gray-900 py-10 w-full h-full">
     <div
       class="container mx-auto flex flex-col lg:flex-row justify-between items-center"
     >
       <!-- Logo and Text -->
       <div class="flex flex-col items-center mb-4 lg:mb-0">
-        <h1>PontiAI</h1>
-        <span class="font-semibold text-lg"
-          >Сервис создания ИИ-ассистентов</span
+        <h1 class="text-2xl font-bold text-gray-900 dark:text-white">
+          Tan'dau
+        </h1>
+        <span class="font-semibold text-lg text-gray-600 dark:text-gray-300"
+          >AI Assistant Creation Service</span
         >
-      </div>
-
-      <!-- Links -->
-      <div class="flex flex-col lg:flex-row gap-4 lg:gap-8 mb-4 lg:mb-0">
-        <div class="flex flex-col items-center lg:items-start">
-          <NuxtLink to="#" class="text-gray-600 hover:text-gray-900 mb-2"
-            >Блог</NuxtLink
-          >
-          <NuxtLink to="#" class="text-gray-600 hover:text-gray-900 mb-2"
-            >Консультация</NuxtLink
-          >
-          <NuxtLink to="#" class="text-gray-600 hover:text-gray-900 mb-2"
-            >Стоимость</NuxtLink
-          >
-          <NuxtLink to="#" class="text-gray-600 hover:text-gray-900"
-            >Privacy Policy (EN)</NuxtLink
-          >
-        </div>
-
-        <div class="flex flex-col items-center lg:items-start">
-          <NuxtLink to="#" class="text-gray-600 hover:text-gray-900 mb-2"
-            >Политика конфиденциальности</NuxtLink
-          >
-          <NuxtLink to="#" class="text-gray-600 hover:text-gray-900 mb-2"
-            >Пользовательское соглашение</NuxtLink
-          >
-          <NuxtLink to="#" class="text-gray-600 hover:text-gray-900 mb-2"
-            >Договор оферты</NuxtLink
-          >
-          <NuxtLink to="#" class="text-gray-600 hover:text-gray-900"
-            >Описание процедуры оплаты</NuxtLink
-          >
-        </div>
       </div>
 
       <!-- Contact & Socials -->
-      <div class="text-center lg:text-right">
+      <div class="text-center flex flex-col items-center lg:text-right">
         <a
-          href="mailto:contact@pleep.app"
-          class="block text-gray-600 hover:text-gray-900 mb-2"
-          >contact@pleep.app</a
+          href="mailto:ponti@gmail.com"
+          class="block font-semibold text-lg text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white mb-2"
+          >ponti@gmail.com</a
         >
-        <p class="text-gray-600 mb-2">+7 (707) 733 3854</p>
+        <a
+          href="tel:+77475489770"
+          class="block font-semibold text-lg text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white mb-2"
+          >+77475489770</a
+        >
         <div class="flex justify-center lg:justify-end space-x-4 mt-2">
-          <a href="#" class="text-gray-600 hover:text-gray-900">
+          <a
+            href="#"
+            class="text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white"
+          >
             <!-- <img src="/instagram-icon.png" alt="Instagram" class="h-6" /> -->
           </a>
-          <a href="#" class="text-gray-600 hover:text-gray-900">
+          <a
+            href="#"
+            class="text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white"
+          >
             <!-- <img src="/whatsapp-icon.png" alt="WhatsApp" class="h-6" /> -->
           </a>
-          <a href="#" class="text-gray-600 hover:text-gray-900">
+          <a
+            href="#"
+            class="text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white"
+          >
             <!-- <img src="/telegram-icon.png" alt="Telegram" class="h-6" /> -->
           </a>
         </div>
       </div>
+
+      <!-- Copyright -->
+      <p class="text-sm text-gray-500 dark:text-gray-400">
+        © All rights reserved. Almaty, Kazakhstan, 2025
+      </p>
     </div>
   </footer>
 </template>
