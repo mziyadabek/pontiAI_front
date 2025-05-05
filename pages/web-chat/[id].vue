@@ -2,9 +2,12 @@
 import { ref, onMounted, nextTick } from "vue";
 import { useRoute, useNuxtApp } from "#app";
 import { useChatStore } from "~/store/chat";
+import { useAuthStore } from "~/store/auth";
+
 const route = useRoute();
 const { $api } = useNuxtApp();
 const chatStore = useChatStore();
+const authStore = useAuthStore();
 const assistantId = Number(chatStore.assistentId);
 const assistantName = ref("Loading...");
 const loading = ref(false);
@@ -67,11 +70,12 @@ const handleSend = async (text: string) => {
   scrollToBottom();
 
   try {
-    const token = localStorage.getItem("token");
-    console.log("Token:", token); // Debug log
+    const token = authStore.token;
+    console.log("Token from auth store:", token); // Debug log
 
     if (!token) {
-      throw new Error("No authentication token found");
+      navigateTo("/signin");
+      return;
     }
 
     const response = await fetch(
@@ -114,7 +118,7 @@ const handleSend = async (text: string) => {
     messages.value.push({
       id: messages.value.length + 1,
       author: "assistant",
-      text: "Oops! Something went wrong while getting my response.",
+      text: "Please sign in to continue chatting.",
       time: new Date().toISOString(),
     });
   } finally {
