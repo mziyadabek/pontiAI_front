@@ -2,12 +2,10 @@
 import { ref, onMounted, nextTick } from "vue";
 import { useRoute, useNuxtApp } from "#app";
 import { useChatStore } from "~/store/chat";
-import { useAuthStore } from "~/store/auth";
 
 const route = useRoute();
 const { $api } = useNuxtApp();
 const chatStore = useChatStore();
-const authStore = useAuthStore();
 const assistantId = Number(chatStore.assistentId);
 const assistantName = ref("Loading...");
 const loading = ref(false);
@@ -70,21 +68,12 @@ const handleSend = async (text: string) => {
   scrollToBottom();
 
   try {
-    const token = authStore.token;
-    console.log("Token from auth store:", token); // Debug log
-
-    if (!token) {
-      navigateTo("/signin");
-      return;
-    }
-
     const response = await fetch(
       `https://ai-assistant-backend-cxb2.onrender.com/assistants/${assistantId}/chat`,
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           text: userMsg.text,
@@ -95,17 +84,12 @@ const handleSend = async (text: string) => {
       }
     );
 
-    console.log("Response status:", response.status); // Debug log
-    console.log("Response headers:", response.headers); // Debug log
-
     if (!response.ok) {
-      const errorData = await response.json().catch(() => null);
-      console.error("Error response:", errorData); // Debug log
       throw new Error(`HTTP error! status: ${response.status}`);
     }
 
     const data = await response.json();
-    console.log("Response data:", data); // Debug log
+    console.log("Response data:", data);
 
     messages.value.push({
       id: messages.value.length + 1,
@@ -118,12 +102,47 @@ const handleSend = async (text: string) => {
     messages.value.push({
       id: messages.value.length + 1,
       author: "assistant",
-      text: "Please sign in to continue chatting.",
+      text: "Sorry, I'm having trouble responding right now.",
       time: new Date().toISOString(),
     });
   } finally {
     loading.value = false;
     scrollToBottom();
+  }
+};
+
+const deleteAssistant = async (id: number) => {
+  try {
+    const token = authStore.token;
+    if (!token) {
+      throw new Error("No authentication token found");
+    }
+
+    const response = await fetch(
+      `https://ai-assistant-backend-cxb2.onrender.com/assistants/${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => null);
+      console.error("Delete error response:", errorData);
+      throw new Error(`Failed to delete assistant: ${response.status}`);
+    }
+
+    // If successful, remove the assistant from your local state
+    // For example:
+    // assistants.value = assistants.value.filter(a => a.id !== id);
+
+    return true;
+  } catch (error) {
+    console.error("Error deleting assistant:", error);
+    throw error;
   }
 };
 </script>
