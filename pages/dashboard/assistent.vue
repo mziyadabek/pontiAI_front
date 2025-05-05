@@ -41,28 +41,42 @@ const roles = [
 // Handle file upload event
 
 // Create a new assistant
-// Create a new assistant
 async function createAssistant() {
   loading.value = true;
 
-  const payload = {
-    name: assistantName.value,
-    model: "gpt-3.5-turbo",
-    language: "en",
-    business_profile: {
-      business_name: companyName.value,
-      business_type: assistantRole.value,
-      tone_preferences: { primary: conversationTone.value },
-    },
-  };
-
   try {
+    // First, create the assistant
+    const payload = {
+      name: assistantName.value,
+      model: "gpt-3.5-turbo",
+      language: "en",
+      business_profile: {
+        business_name: companyName.value,
+        business_type: assistantRole.value,
+        tone_preferences: { primary: conversationTone.value },
+      },
+    };
+
     const response = await $api<{ id: number }>("/assistants/", {
       method: "POST",
       body: payload,
     });
 
     const assistantId = response.id;
+
+    // If there's a file, upload it
+    if (businessFile.value) {
+      const formData = new FormData();
+      formData.append("file", businessFile.value);
+
+      await $api(`/assistants/${assistantId}/upload-knowledge`, {
+        method: "POST",
+        body: formData,
+        headers: {
+          Accept: "application/json",
+        },
+      });
+    }
 
     const assistantData = await $api<{ id: number; name: string }>(
       `/assistants/${assistantId}`,
@@ -78,6 +92,7 @@ async function createAssistant() {
     isOpen.value = false;
   } catch (error) {
     console.error("Error creating or fetching assistant:", error);
+    alert("Failed to create assistant. Please try again.");
   } finally {
     loading.value = false;
   }
@@ -178,7 +193,9 @@ async function uploadKnowledge(assistantId: number) {
 
 function handleFileChange(event: Event) {
   const target = event.target as HTMLInputElement;
-  knowledgeFile.value = target.files ? target.files[0] : null;
+  if (target.files && target.files.length > 0) {
+    businessFile.value = target.files[0];
+  }
 }
 
 async function deleteAssistant(assistantId: number) {
@@ -271,8 +288,18 @@ onMounted(fetchAssistants);
             />
           </div>
           <div>
-            <label class="block text-sm font-medium mb-1">Select File</label>
-            <UInput type="file" @change="handleFileChange" class="w-full" />
+            <label class="block text-sm font-medium mb-1 dark:text-gray-200"
+              >Upload Knowledge Base</label
+            >
+            <UInput
+              type="file"
+              @change="handleFileChange"
+              class="w-full"
+              accept=".pdf,.doc,.docx,.txt"
+            />
+            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">
+              Supported formats: PDF, DOC, DOCX, TXT
+            </p>
           </div>
         </div>
       </template>
@@ -293,7 +320,12 @@ onMounted(fetchAssistants);
             color="primary"
             size="lg"
             class="bg-blue-500 hover:bg-blue-600 transition duration-300"
-            :disabled="!knowledgeFile"
+            :disabled="
+              !assistantName ||
+              !conversationTone ||
+              !companyName ||
+              !assistantRole
+            "
             @click="createAssistant"
           />
         </div>
@@ -372,8 +404,18 @@ onMounted(fetchAssistants);
             />
           </div>
           <div>
-            <label class="block text-sm font-medium mb-1">Select File</label>
-            <UInput type="file" @change="handleFileChange" class="w-full" />
+            <label class="block text-sm font-medium mb-1 dark:text-gray-200"
+              >Upload Knowledge Base</label
+            >
+            <UInput
+              type="file"
+              @change="handleFileChange"
+              class="w-full"
+              accept=".pdf,.doc,.docx,.txt"
+            />
+            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">
+              Supported formats: PDF, DOC, DOCX, TXT
+            </p>
           </div>
         </div>
       </template>
@@ -394,7 +436,12 @@ onMounted(fetchAssistants);
             color="primary"
             size="lg"
             class="bg-blue-500 hover:bg-blue-600 transition duration-300"
-            :disabled="!knowledgeFile"
+            :disabled="
+              !assistantName ||
+              !conversationTone ||
+              !companyName ||
+              !assistantRole
+            "
             @click="createAssistant"
           />
         </div>
