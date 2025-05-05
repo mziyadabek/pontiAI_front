@@ -67,13 +67,16 @@ const handleSend = async (text: string) => {
   scrollToBottom();
 
   try {
+    // Get the token from your auth store or wherever you store it
+    const token = localStorage.getItem("token") || ""; // or however you store your token
+
     const response = await fetch(
       `https://ai-assistant-backend-cxb2.onrender.com/assistants/${assistantId}/chat`,
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: "Bearer YOUR_TOKEN_HERE",
+          Authorization: `Bearer ${token}`, // Use the actual token here
         },
         body: JSON.stringify({
           text: userMsg.text,
@@ -84,13 +87,17 @@ const handleSend = async (text: string) => {
       }
     );
 
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
     const data = await response.json();
-    console.log("Response:", data); // Log the response to check if it contains the message
+    console.log("Response:", data);
 
     messages.value.push({
       id: messages.value.length + 1,
       author: "assistant",
-      text: data.response,
+      text: data.content, // Note: changed from data.response to data.content based on your API response
       time: new Date().toISOString(),
     });
   } catch (error) {
