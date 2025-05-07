@@ -71,10 +71,8 @@ onUpdated(() => {
     </div>
 
     <!-- Input Container -->
-    <div class="mt-auto border-t border-gray-200">
-      <div class="p-4">
-        <ChatInput @send="emit('send', $event)" />
-      </div>
+    <div class="mt-auto">
+      <ChatInput @send="emit('send', $event)" />
     </div>
   </div>
 </template>
