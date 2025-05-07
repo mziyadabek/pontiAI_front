@@ -49,10 +49,17 @@
       </div>
 
       <!-- Video placeholder with hover animation -->
-      <div
-        class="w-full max-w-7xl mx-auto bg-gray-200 rounded-2xl aspect-video flex items-center justify-center text-xl font-medium text-black my-6"
-      >
-        Видео
+      <div class="w-full max-w-7xl mx-auto my-6">
+        <div class="relative aspect-video rounded-2xl overflow-hidden">
+          <iframe
+            class="absolute top-0 left-0 w-full h-full"
+            src="https://www.youtube.com/embed/2pOnHp4OyrY"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+          ></iframe>
+        </div>
       </div>
 
       <!-- Feature cards with staggered animation -->

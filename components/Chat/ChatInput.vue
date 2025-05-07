@@ -34,14 +34,14 @@ const handleInput = (event: Event) => {
   <div class="relative">
     <textarea
       v-model="message"
-      class="w-full px-4 py-3 pr-12 text-sm border border-gray-200 dark:border-gray-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white resize-none"
+      class="w-full px-4 py-3 pr-12 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
       placeholder="Type your message..."
       rows="1"
       @keypress="handleKeyPress"
       @input="handleInput"
     ></textarea>
     <button
-      class="absolute right-2 bottom-2 p-2 text-blue-500 hover:text-blue-600 disabled:text-gray-400 disabled:cursor-not-allowed transition-colors"
+      class="absolute right-2 bottom-2 p-2 text-blue-500 hover:text-blue-600 disabled:text-gray-400 disabled:cursor-not-allowed"
       :disabled="!message.trim()"
       @click="handleSubmit"
     >
