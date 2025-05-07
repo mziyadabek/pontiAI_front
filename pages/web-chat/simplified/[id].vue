@@ -23,6 +23,7 @@
 import { ref, onMounted, nextTick } from "vue";
 import { useRoute } from "#app";
 import Chat from "~/components/Chat/index.vue";
+import { useChatStore } from "~/store/chat";
 
 const route = useRoute();
 const businessUniqueId = route.params.id;
@@ -129,6 +130,14 @@ const handleSend = async (text: string) => {
   scrollToBottom();
 
   try {
+    // Get the assistant ID from the chat store
+    const chatStore = useChatStore();
+    const assistantId = chatStore.assistentId;
+
+    if (!assistantId) {
+      throw new Error("No assistant ID found");
+    }
+
     const response = await fetch(
       `https://ai-assistant-backend-cxb2.onrender.com/web-chat/simplified-chat/${businessUniqueId}?client_id=${clientId}`,
       {
@@ -139,7 +148,7 @@ const handleSend = async (text: string) => {
         body: JSON.stringify({
           content: text,
           role: "user",
-          assistant_id: Number(businessUniqueId),
+          assistant_id: Number(assistantId),
         }),
       }
     );
