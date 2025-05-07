@@ -2,6 +2,7 @@
 import { ref, onMounted, nextTick } from "vue";
 import { useRoute, useNuxtApp } from "#app";
 import { useChatStore } from "~/store/chat";
+import { useAuthStore } from "~/store/auth";
 
 const route = useRoute();
 const { $api } = useNuxtApp();
@@ -36,21 +37,29 @@ const scrollToBottom = async () => {
 // Fetch assistant name
 onMounted(async () => {
   try {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      throw new Error("Please sign in to continue");
+    }
+
     const assistant = await $api<{ name: string }>(
       `/assistants/${assistantId}`,
       {
         method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       }
     );
 
     console.log("assistant:", assistant);
-
     assistantName.value = assistant.name;
-  } catch {
+  } catch (error) {
+    console.error("Error fetching assistant:", error);
     assistantName.value = "Unknown Assistant";
   }
 
-  scrollToBottom(); // scroll when loaded
+  scrollToBottom();
 });
 
 const handleSend = async (text: string) => {
@@ -68,9 +77,7 @@ const handleSend = async (text: string) => {
   scrollToBottom();
 
   try {
-    // Get token from localStorage
     const token = localStorage.getItem("token");
-
     if (!token) {
       throw new Error("Please sign in to continue chatting");
     }
@@ -93,6 +100,8 @@ const handleSend = async (text: string) => {
     );
 
     if (!response.ok) {
+      const errorData = await response.json().catch(() => null);
+      console.error("Error response:", errorData);
       throw new Error(`HTTP error! status: ${response.status}`);
     }
 
