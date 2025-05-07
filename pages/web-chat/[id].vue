@@ -7,6 +7,7 @@ import { useAuthStore } from "~/store/auth";
 const route = useRoute();
 const { $api } = useNuxtApp();
 const chatStore = useChatStore();
+const authStore = useAuthStore();
 const assistantId = Number(chatStore.assistentId);
 const assistantName = ref("Loading...");
 const loading = ref(false);
@@ -37,8 +38,7 @@ const scrollToBottom = async () => {
 // Fetch assistant name
 onMounted(async () => {
   try {
-    const token = localStorage.getItem("token");
-    if (!token) {
+    if (!authStore.isAuthenticated) {
       throw new Error("Please sign in to continue");
     }
 
@@ -47,7 +47,7 @@ onMounted(async () => {
       {
         method: "GET",
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${authStore.token}`,
         },
       }
     );
@@ -77,8 +77,7 @@ const handleSend = async (text: string) => {
   scrollToBottom();
 
   try {
-    const token = localStorage.getItem("token");
-    if (!token) {
+    if (!authStore.isAuthenticated) {
       throw new Error("Please sign in to continue chatting");
     }
 
@@ -88,7 +87,7 @@ const handleSend = async (text: string) => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${authStore.token}`,
         },
         body: JSON.stringify({
           text: userMsg.text,
