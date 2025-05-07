@@ -130,18 +130,16 @@ const handleSend = async (text: string) => {
 
   try {
     const response = await fetch(
-      `https://ai-assistant-backend-cxb2.onrender.com/web-chat/simplified-chat/${businessUniqueId}`,
+      `https://ai-assistant-backend-cxb2.onrender.com/web-chat/simplified-chat/${businessUniqueId}?client_id=${clientId}`,
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          text: text,
-          client_id: clientId,
-          tone: "normal",
-          business_type: "selling",
-          language: "en",
+          content: text,
+          role: "user",
+          assistant_id: Number(businessUniqueId),
         }),
       }
     );
