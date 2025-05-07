@@ -68,12 +68,20 @@ const handleSend = async (text: string) => {
   scrollToBottom();
 
   try {
+    // Get token from localStorage
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      throw new Error("Please sign in to continue chatting");
+    }
+
     const response = await fetch(
       `https://ai-assistant-backend-cxb2.onrender.com/assistants/${assistantId}/chat`,
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           text: userMsg.text,
@@ -102,7 +110,7 @@ const handleSend = async (text: string) => {
     messages.value.push({
       id: messages.value.length + 1,
       author: "assistant",
-      text: "Sorry, I'm having trouble responding right now.",
+      text: "Please sign in to continue chatting.",
       time: new Date().toISOString(),
     });
   } finally {
