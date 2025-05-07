@@ -33,15 +33,22 @@ onUpdated(() => {
         :class="msg.author === 'user' ? 'justify-end' : 'justify-start'"
       >
         <div
-          class="max-w-[70%] px-4 py-3 text-sm bg-blue-500 text-white rounded-lg rounded-br-none"
+          class="max-w-[70%] px-4 py-3 text-sm rounded-lg"
           :class="
             msg.author === 'user'
               ? 'bg-blue-500 text-white rounded-br-none'
-              : 'bg-gray-100 text-gray-800 rounded-bl-none'
+              : 'bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 rounded-bl-none'
           "
         >
           <p class="whitespace-pre-line">{{ msg.text }}</p>
-          <p class="mt-1 text-[11px] text-blue-100 text-right">
+          <p
+            class="mt-1 text-[11px] text-right"
+            :class="
+              msg.author === 'user'
+                ? 'text-blue-100'
+                : 'text-gray-500 dark:text-gray-400'
+            "
+          >
             {{
               new Date(msg.time).toLocaleTimeString([], {
                 hour: "2-digit",
@@ -58,7 +65,7 @@ onUpdated(() => {
 
     <!-- Input -->
     <div
-      class="absolute bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4"
+      class="absolute bottom-0 left-0 right-0 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700 p-4"
     >
       <ChatInput @send="emit('send', $event)" />
     </div>
