@@ -24,11 +24,6 @@ import { ref, onMounted, nextTick } from "vue";
 import { useRoute } from "#app";
 import Chat from "~/components/Chat/index.vue";
 
-definePageMeta({
-  layout: "dashboard",
-  name: "simplified-chat",
-});
-
 const route = useRoute();
 const businessUniqueId = route.params.id;
 const loading = ref(false);
@@ -142,13 +137,18 @@ const handleSend = async (text: string) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          content: text,
+          text: text,
           client_id: clientId,
+          tone: "normal",
+          business_type: "selling",
+          language: "en",
         }),
       }
     );
 
     if (!response.ok) {
+      const errorData = await response.json().catch(() => null);
+      console.error("Error response:", errorData);
       throw new Error(`HTTP error! status: ${response.status}`);
     }
 
