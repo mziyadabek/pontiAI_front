@@ -440,7 +440,8 @@ onMounted(fetchAssistants);
               !assistantName ||
               !conversationTone ||
               !companyName ||
-              !assistantRole
+              !assistantRole ||
+              !businessFile
             "
             @click="createAssistant"
           />
