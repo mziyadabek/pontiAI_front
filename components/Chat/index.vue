@@ -24,10 +24,10 @@ onUpdated(() => {
 </script>
 
 <template>
-  <div class="flex h-full w-full flex-col">
+  <div class="flex h-[calc(100vh-4rem)] w-full flex-col">
     <!-- Fixed Header -->
     <div
-      class="flex-none bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 p-4"
+      class="flex-none bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 p-3"
     >
       <h1 class="text-lg font-semibold text-gray-900 dark:text-white">
         Company Name
@@ -35,7 +35,7 @@ onUpdated(() => {
     </div>
 
     <!-- Scrollable Messages Area -->
-    <div class="flex-1 overflow-y-auto px-4 py-6 space-y-4">
+    <div class="flex-1 overflow-y-auto px-4 py-4 space-y-4">
       <div
         v-for="msg in messages"
         :key="msg.id"
@@ -75,7 +75,7 @@ onUpdated(() => {
 
     <!-- Fixed Input -->
     <div
-      class="flex-none bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700 p-4"
+      class="flex-none bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700 p-3"
     >
       <ChatInput @send="emit('send', $event)" />
     </div>
