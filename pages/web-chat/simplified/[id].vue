@@ -3,11 +3,15 @@
     <h2
       class="text-xl font-semibold mb-4 text-center text-gray-900 dark:text-gray-100"
     >
-      Chatting with: {{ businessName }}
+      Chatting with: {{}}
     </h2>
 
     <div class="flex-1 flex flex-col min-h-0">
-      <Chat :messages="messages" @send="handleSend" />
+      <Chat
+        :messages="messages"
+        :assistant-name="assistantName"
+        @send="handleSend"
+      />
       <div ref="scrollAnchor" />
     </div>
     <div
@@ -30,6 +34,7 @@ const businessUniqueId = route.params.id;
 const loading = ref(false);
 const businessName = ref("Loading...");
 const welcomeMessage = ref("");
+const assistantName = ref("AI Assistant");
 
 type Message = {
   id: number;

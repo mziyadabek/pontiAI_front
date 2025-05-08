@@ -8,6 +8,7 @@ defineProps<{
     text: string;
     time: string;
   }[];
+  assistantName?: string;
 }>();
 
 const emit = defineEmits<{
@@ -30,7 +31,7 @@ onUpdated(() => {
       class="flex-none bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 p-3"
     >
       <h1 class="text-lg font-semibold text-gray-900 dark:text-white">
-        Company Name
+        {{ assistantName || "Assistant" }}
       </h1>
     </div>
 
