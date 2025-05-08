@@ -1,5 +1,5 @@
 <template>
-  <div class="h-full w-full m-10 flex flex-col">
+  <div class="h-full w-full flex flex-col">
     <h2
       class="text-xl font-semibold mb-4 text-center text-gray-900 dark:text-gray-100"
     >
