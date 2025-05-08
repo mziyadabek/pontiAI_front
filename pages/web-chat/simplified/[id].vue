@@ -1,9 +1,9 @@
 <template>
-  <div class="h-full w-full flex flex-col">
+  <div class="h-full w-full m-10 flex flex-col">
     <h2
       class="text-xl font-semibold mb-4 text-center text-gray-900 dark:text-gray-100"
     >
-      Chatting with: {{}}
+      Chatting with: {{ businessName }}
     </h2>
 
     <div class="flex-1 flex flex-col min-h-0">
